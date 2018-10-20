@@ -1,0 +1,20 @@
+name: argu
+version: git
+# Max 79 chars
+summary: An interactive web server.
+description: |
+  Argu is a CLI for the Argu.co e-democracy platform.
+  Use this to read content, create votes and add arguments.
+
+grade: devel
+confinement: devmode
+
+parts:
+  argu:
+    source: .
+    plugin: go
+    go-importpath: /bitbucket.org/arguweb/argu-cli
+
+apps:
+  argu:
+    command: argu
