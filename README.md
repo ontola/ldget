@@ -2,8 +2,14 @@
 
 A simple command line interface tool to get items from [argu.co](https://argu.co).
 
-## Installation
-
+## Run locally
 `git clone https://bitbucket.org/joepio/argu-cli`
-`go build argu.go`
-`./argu get`
+`go run ./argu.go get`
+
+Or compile and run:
+`go build`
+`./argu-cli get`
+
+Or install to `bin` and run:
+`go install`
+`argu-cli get`
