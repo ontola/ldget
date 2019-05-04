@@ -1,7 +1,7 @@
 name: argu
 version: git
 # Max 79 chars
-summary: An interactive web server.
+summary: Managing data on Argu.co.
 description: |
   Argu is a CLI for the Argu.co e-democracy platform.
   Use this to read content, create votes and add arguments.
