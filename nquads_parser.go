@@ -23,8 +23,8 @@ func removeFishHooks(iri string) string {
 	return matches[1]
 }
 
-// parse -- Reads a stream of NQuads and returns an array of Triples
-func parse(body io.Reader) (triples []*Triple, err error) {
+// Parse -- Reads a stream of NQuads and returns an array of Triples
+func Parse(body io.Reader) (triples []*Triple, err error) {
 	scanner := bufio.NewScanner(bufio.NewReader(body))
 	// Iterates over every single triple
 	var parsedTriples []*Triple

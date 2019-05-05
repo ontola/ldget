@@ -51,8 +51,8 @@ func run(args []string) {
 			Action: func(c *cli.Context) error {
 				// resourceURL := c.Args()
 				resourceURL := c.String("resource")
-				// subject := c.String("subject")
-				// object := c.String("object")
+				subject := c.String("subject")
+				object := c.String("object")
 				predicate := c.String("predicate")
 				resp, err := http.Get(resourceURL)
 				if err != nil {
@@ -61,8 +61,9 @@ func run(args []string) {
 				// escapedSubject := regexp.QuoteMeta(subject)
 				// subjectFinder := fmt.Sprintf("(<%s> <.+?>) ([^<]+)", escapedSubject)
 				// mySubject, err := regexp.Compile(subjectFinder)
-				allTriples, err := parse(resp.Body)
-				hits := findByPredicate(allTriples, predicate)
+				allTriples, err := Parse(resp.Body)
+				// hits := findByPredicate(allTriples, predicate)
+				hits := filterTriples(allTriples, subject, predicate, object)
 				if len(hits) == 0 {
 					fmt.Println("Not found")
 				} else if hits[0] == nil {

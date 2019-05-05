@@ -2,6 +2,7 @@
 
 A simple command line interface tool to get and manipulate RDF items.
 Supports N-Quads.
+Not yet ready for prime time, still in development.
 
 ## Run locally
 
