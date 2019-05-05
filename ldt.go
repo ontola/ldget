@@ -65,9 +65,9 @@ func run(args []string) {
 				// hits := findByPredicate(allTriples, predicate)
 				hits := filterTriples(allTriples, subject, predicate, object)
 				if len(hits) == 0 {
-					fmt.Println("Not found")
+					log.Fatal("Not found")
 				} else if hits[0] == nil {
-					fmt.Println("Found, but no object in triple")
+					log.Fatal("Found, but no object in triple")
 				} else {
 					fmt.Println(hits[0].object)
 				}
