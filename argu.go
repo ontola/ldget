@@ -1,12 +1,10 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
-	"regexp"
 	"time"
 
 	"github.com/urfave/cli"
@@ -32,8 +30,16 @@ func run(args []string) {
 
 	myFlags := []cli.Flag{
 		cli.StringFlag{
-			Name:  "site",
-			Value: "https://argu.co",
+			Name:  "resource",
+			Usage: "The URL of the resource to be fetched. Should return an N-Quads file",
+		},
+		cli.StringFlag{
+			Name:  "subject",
+			Usage: "The URL of the subject to be matched",
+		},
+		cli.StringFlag{
+			Name:  "predicate",
+			Usage: "The URL of the predicate to be matched",
 		},
 	}
 
@@ -43,33 +49,23 @@ func run(args []string) {
 			Usage: "Looks Up the NameServers for a Particular Host",
 			Flags: myFlags,
 			Action: func(c *cli.Context) error {
-				resourceURL := "https://app.argu.co/u/joep.nq"
-				subject := "https://app.argu.co/argu/u/joep"
-				// predicate := "http://schema.org/name"
+				resourceURL := c.String("resource")
+				// subject := c.String("subject")
+				// object := c.String("object")
+				predicate := "http://schema.org/name"
 				resp, err := http.Get(resourceURL)
 				if err != nil {
 					return err
 				}
-
-				scanner := bufio.NewScanner(bufio.NewReader(resp.Body))
-				// Iterates over every single triple
-				for scanner.Scan() {
-					triple := scanner.Text()
-					escapedSubject := regexp.QuoteMeta(subject)
-					subjectFinder := fmt.Sprintf("(<%s> <.+?>) ([^<]+)", escapedSubject)
-					mySubject, err := regexp.Compile(subjectFinder)
-					if mySubject.MatchString(triple) {
-						fmt.Println("Your sub")
-						findObject, err := regexp.Compile(`(<.+?> <.+?>) ([^<]+)`)
-						if err != nil {
-							return err
-						}
-						matches := findObject.FindStringSubmatch(triple)
-						fmt.Println(matches[2], triple)
-					}
-					if err != nil {
-						return err
-					}
+				// escapedSubject := regexp.QuoteMeta(subject)
+				// subjectFinder := fmt.Sprintf("(<%s> <.+?>) ([^<]+)", escapedSubject)
+				// mySubject, err := regexp.Compile(subjectFinder)
+				allTriples, err := parse(resp.Body)
+				hits := findByPredicate(allTriples, predicate)
+				if len(hits) == 0 {
+					fmt.Println("Not found")
+				} else {
+					fmt.Println(hits[0].object)
 				}
 				return nil
 			},
