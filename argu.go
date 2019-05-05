@@ -1,19 +1,22 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
-	// "io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"regexp"
 	"time"
 
-	rdf "github.com/knakk/rdf"
 	"github.com/urfave/cli"
 )
 
 func main() {
+	run(os.Args)
+}
+
+func run(args []string) {
 	app := cli.NewApp()
 	app.Name = "Argu-cli"
 	app.Version = "0.0.1"
@@ -40,33 +43,40 @@ func main() {
 			Usage: "Looks Up the NameServers for a Particular Host",
 			Flags: myFlags,
 			Action: func(c *cli.Context) error {
-				// resourceURL := "https://app.argu.co/u/joep.n3dawd"
-				resourceURL := "https://gist.githubusercontent.com/kal/ee1260ceb462d8e0d5bb/raw/1364c2bb469af53323fdda508a6a579ea60af6e4/log_sample.ttl"
+				resourceURL := "https://app.argu.co/u/joep.nq"
+				subject := "https://app.argu.co/argu/u/joep"
+				// predicate := "http://schema.org/name"
 				resp, err := http.Get(resourceURL)
 				if err != nil {
 					return err
 				}
-				bodyBytes, err := ioutil.ReadAll(resp.Body)
-				bodyString := string(bodyBytes)
-				if len(bodyString) > 0 {
-					fmt.Println("Body present")
+
+				scanner := bufio.NewScanner(bufio.NewReader(resp.Body))
+				// Iterates over every single triple
+				for scanner.Scan() {
+					triple := scanner.Text()
+					escapedSubject := regexp.QuoteMeta(subject)
+					subjectFinder := fmt.Sprintf("(<%s> <.+?>) ([^<]+)", escapedSubject)
+					mySubject, err := regexp.Compile(subjectFinder)
+					if mySubject.MatchString(triple) {
+						fmt.Println("Your sub")
+						findObject, err := regexp.Compile(`(<.+?> <.+?>) ([^<]+)`)
+						if err != nil {
+							return err
+						}
+						matches := findObject.FindStringSubmatch(triple)
+						fmt.Println(matches[2], triple)
+					}
+					if err != nil {
+						return err
+					}
 				}
-				dec := rdf.NewTripleDecoder(resp.Body, rdf.NTriples)
-				fmt.Println("Start decoding...")
-				triples, err := dec.DecodeAll()
-				fmt.Println(triples)
-				fmt.Println(err)
-				// for triple, err := dec.Decode(); err != io.EOF; triple, err = dec.Decode() {
-				// 	fmt.Println("In the loop!")
-				// 	fmt.Println(err)
-				// 	fmt.Println(triple)
-				// }
 				return nil
 			},
 		},
 	}
 
-	err := app.Run(os.Args)
+	err := app.Run(args)
 	if err != nil {
 		log.Fatal(err)
 	}
