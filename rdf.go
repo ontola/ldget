@@ -1,5 +1,12 @@
 package main
 
+// Triple -- A single triple
+type Triple struct {
+	subject   string
+	object    string
+	predicate string
+}
+
 // Finds all triples for a certain subject
 func findBySubject(triples []*Triple, subject string) []*Triple {
 	var hits []*Triple

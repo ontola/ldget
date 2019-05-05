@@ -16,10 +16,10 @@ func main() {
 
 func run(args []string) {
 	app := cli.NewApp()
-	app.Name = "Argu-cli"
-	app.Version = "0.0.1"
+	app.Name = "ldt"
+	app.Version = "0.0.2"
 	app.Compiled = time.Now()
-	app.Usage = "Get your Argu data, straight to your favorite terminal!"
+	app.Usage = "Get your RDF data, straight to your favorite terminal!"
 	app.Authors = []cli.Author{
 		cli.Author{
 			Name:  "Joep Meindertsma",
@@ -46,13 +46,14 @@ func run(args []string) {
 	app.Commands = []cli.Command{
 		{
 			Name:  "get",
-			Usage: "Looks Up the NameServers for a Particular Host",
+			Usage: "Fetch an RDF resource",
 			Flags: myFlags,
 			Action: func(c *cli.Context) error {
+				// resourceURL := c.Args()
 				resourceURL := c.String("resource")
 				// subject := c.String("subject")
 				// object := c.String("object")
-				predicate := "http://schema.org/name"
+				predicate := c.String("predicate")
 				resp, err := http.Get(resourceURL)
 				if err != nil {
 					return err
@@ -64,6 +65,8 @@ func run(args []string) {
 				hits := findByPredicate(allTriples, predicate)
 				if len(hits) == 0 {
 					fmt.Println("Not found")
+				} else if hits[0] == nil {
+					fmt.Println("Found, but no object in triple")
 				} else {
 					fmt.Println(hits[0].object)
 				}

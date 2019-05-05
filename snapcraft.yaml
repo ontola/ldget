@@ -1,20 +1,19 @@
-name: argu
+name: ldt
 version: git
 # Max 79 chars
-summary: Managing data on Argu.co.
+summary: Linked Data Tool
 description: |
-  Argu is a CLI for the Argu.co e-democracy platform.
-  Use this to read content, create votes and add arguments.
+  LDF is a CLI for gettings and manipulating RDF data
 
 grade: devel
 confinement: devmode
 
 parts:
-  argu:
+  ldt:
     source: .
     plugin: go
-    go-importpath: /bitbucket.org/arguweb/argu-cli
+    go-importpath: /github.com/ontola/ldt
 
 apps:
-  argu:
-    command: argu
+  ldt:
+    command: ldt

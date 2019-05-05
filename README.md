@@ -1,15 +1,18 @@
-# Argu Command Line Interface
+# LDT: Linked Data Tool
 
-A simple command line interface tool to get items from [argu.co](https://argu.co).
+A simple command line interface tool to get and manipulate RDF items.
+Supports N-Quads.
 
 ## Run locally
+
 `git clone https://bitbucket.org/joepio/argu-cli`
-`go run ./argu.go get`
-
-Or compile and run:
-`go build`
-`./argu-cli get`
-
-Or install to `bin` and run:
 `go install`
-`argu-cli get`
+`ld get --resource=https://argu.co/u/joep.ttl`
+
+## Test
+
+`go test`
+
+## TODO
+
+[] - Use a better parser. Currently, it only parses N-Quads, and it does so horribly.
