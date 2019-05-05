@@ -19,7 +19,7 @@ func run(args []string) {
 	app.Name = "ldt"
 	app.Version = "0.0.2"
 	app.Compiled = time.Now()
-	app.Usage = "Get your RDF data, straight to your favorite terminal!"
+	app.Usage = "Get your RDF data, straight to your favorite terminal! Flags have precedence over arguments."
 	app.Authors = []cli.Author{
 		cli.Author{
 			Name:  "Joep Meindertsma",
@@ -30,46 +30,45 @@ func run(args []string) {
 
 	myFlags := []cli.Flag{
 		cli.StringFlag{
-			Name:  "resource",
-			Usage: "The URL of the resource to be fetched. Should return an N-Quads file",
+			Name:  "resource, r",
+			Usage: "The URL of the resource to be fetched. URL should return an N-Quads file. If this is empty, the Subject is used.",
 		},
 		cli.StringFlag{
-			Name:  "subject",
-			Usage: "The URL of the subject to be matched",
+			Name:  "subject, s",
+			Usage: "The IRI of the subject to be matched",
 		},
 		cli.StringFlag{
-			Name:  "predicate",
-			Usage: "The URL of the predicate to be matched",
+			Name:  "predicate, p",
+			Usage: "Filter by predicate",
+		},
+		cli.StringFlag{
+			Name:  "object, o",
+			Usage: "Filter by object value",
 		},
 	}
 
 	app.Commands = []cli.Command{
 		{
-			Name:  "get",
-			Usage: "Fetch an RDF resource",
-			Flags: myFlags,
+			Name:    "getObjects",
+			Aliases: []string{"o"},
+			Usage:   "Fetch an RDF resource, return the values. First argument is Subject, second is Predicate.",
+			Flags:   myFlags,
 			Action: func(c *cli.Context) error {
-				// resourceURL := c.Args()
-				resourceURL := c.String("resource")
-				subject := c.String("subject")
-				object := c.String("object")
-				predicate := c.String("predicate")
-				resp, err := http.Get(resourceURL)
+				args := getArgs(c)
+				resp, err := http.Get(args.resourceURL)
 				if err != nil {
 					return err
 				}
-				// escapedSubject := regexp.QuoteMeta(subject)
-				// subjectFinder := fmt.Sprintf("(<%s> <.+?>) ([^<]+)", escapedSubject)
-				// mySubject, err := regexp.Compile(subjectFinder)
 				allTriples, err := Parse(resp.Body)
-				// hits := findByPredicate(allTriples, predicate)
-				hits := filterTriples(allTriples, subject, predicate, object)
+				hits := filterTriples(allTriples, args.subject, args.predicate, args.object)
 				if len(hits) == 0 {
 					log.Fatal("Not found")
 				} else if hits[0] == nil {
 					log.Fatal("Found, but no object in triple")
 				} else {
-					fmt.Println(hits[0].object)
+					for _, element := range hits {
+						fmt.Println(element.object)
+					}
 				}
 				return nil
 			},
@@ -80,4 +79,38 @@ func run(args []string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+type args struct {
+	resourceURL string
+	subject     string
+	object      string
+	predicate   string
+}
+
+func getArgs(c *cli.Context) args {
+	var arguments args
+
+	arguments.subject = c.Args().Get(0)
+	arguments.predicate = c.Args().Get(1)
+	arguments.object = c.Args().Get(2)
+
+	if c.String("subject") != "" {
+		arguments.subject = c.String("subject")
+	}
+	if c.String("predicate") != "" {
+		arguments.predicate = c.String("predicate")
+	}
+	if c.String("object") != "" {
+		arguments.object = c.String("object")
+	}
+	arguments.subject = Mapper(arguments.subject)
+	if c.String("resource") != "" {
+		arguments.resourceURL = c.String("resource")
+	} else {
+		arguments.resourceURL = fmt.Sprintf("%v.nq", arguments.subject)
+	}
+	arguments.predicate = Mapper(arguments.predicate)
+
+	return arguments
 }

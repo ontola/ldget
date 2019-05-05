@@ -8,7 +8,19 @@ Not yet ready for prime time, still in development.
 
 `git clone https://bitbucket.org/joepio/argu-cli`
 `go install`
-`ld get --resource=https://argu.co/u/joep.ttl`
+`ld getObjects https://app.argu.co/argu/u/joep http://schema.org/description"`
+
+## Mapping
+
+You can specify a `mapping.ldmap` file for writing shorthands.
+`ld o joep description"`
+
+```
+// in Mapping.ldmap
+joep=https://app.argu.co/argu/u/joep
+description=http://schema.org/description
+```
+
 
 ## Test
 
@@ -17,3 +29,4 @@ Not yet ready for prime time, still in development.
 ## TODO
 
 [] - Use a better parser. Currently, it only parses N-Quads, and it does so horribly.
+[] - Support JSON-LD @context objects, and map them for easy to use ORM.
