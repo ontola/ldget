@@ -12,7 +12,7 @@ var description = "\"Liefhebber van discussiëren, ontwerpen en problemen oploss
 
 func TestGetObject(t *testing.T) {
 	args := os.Args[0:1]
-	args = append(args, "getObjects")
+	args = append(args, "objects")
 	args = append(args, "--resource=https://app.argu.co/u/joep.nq")
 	args = append(args, "--subject=https://app.argu.co/argu/u/joep")
 	args = append(args, "--predicate=http://schema.org/description")
@@ -26,7 +26,7 @@ func TestGetObject(t *testing.T) {
 
 func TestGetObjectArgs(t *testing.T) {
 	args := os.Args[0:1]
-	args = append(args, "getObjects")
+	args = append(args, "objects")
 	args = append(args, "https://app.argu.co/argu/u/joep")
 	args = append(args, "http://schema.org/description")
 	out := capturer.CaptureStdout(func() {
