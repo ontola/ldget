@@ -63,11 +63,9 @@ func run(args []string) {
 				hits := filterTriples(allTriples, args.subject, args.predicate, args.object)
 				if len(hits) == 0 {
 					log.Fatal("Not found")
-				} else if hits[0] == nil {
-					log.Fatal("Found, but no object in triple")
 				} else {
 					for _, element := range hits {
-						fmt.Println(element.object)
+						fmt.Println(element.Obj)
 					}
 				}
 				return nil
@@ -112,7 +110,7 @@ func getArgs(c *cli.Context) args {
 			log.Fatal("No resource or subject provided. See --help.")
 		}
 		// TODO: use content negotiation
-		arguments.resourceURL = fmt.Sprintf("%v.nq", arguments.subject)
+		arguments.resourceURL = fmt.Sprintf("%v.nt", arguments.subject)
 	}
 	arguments.predicate = Mapper(arguments.predicate)
 

@@ -29,8 +29,8 @@ If you have a prefixes, you can use shorthand prefixes: `ldget objects joep sche
 
 ## TODO
 
-[] - Use a better parser. Currently, it only parses N-Quads, and it does so horribly.
 [] - Support (external) JSON-LD @context objects, and map them for easy to use ORM.
-[x] - Prefix colon syntax (e.g. schema:description)
 [] - Use content negotiation / accept headers
 [] - Traverse relationships, fetch content across websites.
+[x] - Prefix colon syntax (e.g. schema:description)
+[x] - Use a better parser. Currently, it only parses N-Quads, and it does so horribly.
