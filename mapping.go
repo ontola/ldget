@@ -28,7 +28,7 @@ func readMap(filePath string) []prefix {
 		matches := selector.FindStringSubmatch(line)
 		var p prefix
 		if len(matches) < 2 {
-			log.Fatal("Something is wrong with your mapping file.")
+			log.Fatal("Something is wrong with your prefixes file.")
 		}
 		p.key = matches[1]
 		p.url = matches[2]
@@ -42,13 +42,12 @@ func readMap(filePath string) []prefix {
 
 func getAllMaps() []prefix {
 	var allPrefixes []prefix
-	allPrefixes = append(allPrefixes, readMap("defaultMapping")...)
 
 	usr, err := user.Current()
 	if err != nil {
 		log.Fatal(err)
 	}
-	userMappingLocation := fmt.Sprintf("%v/.ldget/mapping", usr.HomeDir)
+	userMappingLocation := fmt.Sprintf("%v/.ldget/prefixes", usr.HomeDir)
 
 	allPrefixes = append(allPrefixes, readMap(userMappingLocation)...)
 	return allPrefixes
@@ -56,7 +55,7 @@ func getAllMaps() []prefix {
 
 var colonCheck, _ = regexp.Compile(`(.*):(.*)`)
 
-// Mapper -- converts a mapped string to a URI
+// Mapper -- converts a mapped prefix to a URI
 func Mapper(str string) string {
 	httpCheck, err := regexp.MatchString(`http.*`, str)
 	if err != nil {

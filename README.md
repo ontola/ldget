@@ -10,17 +10,18 @@ Not yet ready for prime time, still in development.
 `go install`
 `ldget objects https://app.argu.co/argu/u/joep http://schema.org/description"`
 
-## Mapping
+## Prefixes
 
-You can specify an `~/.ldget/mapping` file for writing shorthands / @prefixes.
+URLs are awesome, but they are cumbersome to remember and type.
+You can specify a set of prefixes in `~/.ldget/prefixes` for mapping URLS to shorthands.
 
 ```
-// in ~/.ldget/mapping
+// in ~/.ldget/prefixes
 joep=https://app.argu.co/argu/u/joep
-description=http://schema.org/description
+schema=http://schema.org/
 ```
 
-If you have a mapping, you can use shorthand prefixes: `ldget objects joep description"`.
+If you have a prefixes, you can use shorthand prefixes: `ldget objects joep schema:description"`.
 
 ## Test
 

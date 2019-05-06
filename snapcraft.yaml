@@ -1,19 +1,19 @@
-name: ldt
+name: ldget
 version: git
 # Max 79 chars
-summary: Linked Data Tool
+summary: Linked Data Get
 description: |
-  LDF is a CLI for gettings and manipulating RDF data
+  ldget is a CLI for getting RDF data
 
 grade: devel
 confinement: devmode
 
 parts:
-  ldt:
+  ldget:
     source: .
     plugin: go
-    go-importpath: /github.com/ontola/ldt
+    go-importpath: /github.com/ontola/ldget
 
 apps:
-  ldt:
-    command: ldt
+  ldget:
+    command: ldget
