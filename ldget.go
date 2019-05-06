@@ -16,7 +16,7 @@ func main() {
 
 func run(args []string) {
 	app := cli.NewApp()
-	app.Name = "ldt"
+	app.Name = "Linked Data Get"
 	app.Version = "0.0.2"
 	app.Compiled = time.Now()
 	app.Usage = "Get your RDF data, straight to your favorite terminal! Flags have precedence over arguments."
@@ -49,7 +49,7 @@ func run(args []string) {
 
 	app.Commands = []cli.Command{
 		{
-			Name:    "getObjects",
+			Name:    "objects",
 			Aliases: []string{"o"},
 			Usage:   "Fetch an RDF resource, return the values. First argument is Subject, second is Predicate.",
 			Flags:   myFlags,
@@ -108,6 +108,10 @@ func getArgs(c *cli.Context) args {
 	if c.String("resource") != "" {
 		arguments.resourceURL = c.String("resource")
 	} else {
+		if arguments.subject == "" {
+			log.Fatal("No resource or subject provided. See --help.")
+		}
+		// TODO: use content negotiation
 		arguments.resourceURL = fmt.Sprintf("%v.nq", arguments.subject)
 	}
 	arguments.predicate = Mapper(arguments.predicate)

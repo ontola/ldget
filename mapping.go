@@ -20,7 +20,11 @@ var mySecondPrefix = prefix{"description", "http://schema.org/description"}
 
 var prefixArray = []prefix{myFirstPrefix, mySecondPrefix}
 
-var myMap = Map{prefixArray}
+func readMap() Map {
+	return Map{prefixArray}
+}
+
+var myMap = readMap()
 
 // Mapper -- converts a mappeed string to a URI
 func Mapper(str string) string {
