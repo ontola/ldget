@@ -54,18 +54,37 @@ func getAllMaps() []prefix {
 	return allPrefixes
 }
 
-// Mapper -- converts a mappeed string to a URI
+var colonCheck, _ = regexp.Compile(`(.*):(.*)`)
+
+// Mapper -- converts a mapped string to a URI
 func Mapper(str string) string {
-	matched, err := regexp.MatchString(`http.*`, str)
+	httpCheck, err := regexp.MatchString(`http.*`, str)
 	if err != nil {
 		log.Fatal(err)
 	}
 	output := str
-	if matched {
+	// If the input starts with http, don't look up the mapping
+	if httpCheck {
 		return output
 	}
+
+	// Check for colon prefix syntax, e.g. `schema:description`
+	matches := colonCheck.FindStringSubmatch(str)
+	if len(matches) > 2 {
+		output = fmt.Sprintf("%v%v", getPrefix(matches[1]), matches[2])
+	} else {
+		// Directly use the prefix
+		output = getPrefix(str)
+	}
+
+	return output
+}
+
+// Returns URL for some prefix
+func getPrefix(key string) string {
+	output := key
 	for _, prefix := range getAllMaps() {
-		if prefix.key == str {
+		if prefix.key == key {
 			output = prefix.url
 			break
 		}
