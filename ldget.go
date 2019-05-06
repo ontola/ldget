@@ -28,8 +28,6 @@ func run(args []string) {
 	}
 	app.EnableBashCompletion = true
 
-	initialize()
-
 	myFlags := []cli.Flag{
 		cli.StringFlag{
 			Name:  "resource, r",
@@ -119,8 +117,4 @@ func getArgs(c *cli.Context) args {
 	arguments.predicate = Mapper(arguments.predicate)
 
 	return arguments
-}
-
-func initialize() {
-	getAllMaps()
 }
