@@ -35,11 +35,11 @@ func run(args []string) {
 		},
 		cli.StringFlag{
 			Name:  "subject, s",
-			Usage: "The IRI of the subject to be matched",
+			Usage: "Filter by subject IRI.  Prefixes allowed.",
 		},
 		cli.StringFlag{
 			Name:  "predicate, p",
-			Usage: "Filter by predicate",
+			Usage: "Filter by predicate IRI. Prefixes allowed.",
 		},
 		cli.StringFlag{
 			Name:  "object, o",
@@ -51,7 +51,7 @@ func run(args []string) {
 		{
 			Name:    "objects",
 			Aliases: []string{"o"},
-			Usage:   "Fetch an RDF resource, return the values. First argument is Subject, second is Predicate.",
+			Usage:   "Fetch an RDF resource, return the object values. First argument filters by Subject, second by Predicate.",
 			Flags:   myFlags,
 			Action: func(c *cli.Context) error {
 				args := getArgs(c)
