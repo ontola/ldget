@@ -1,30 +1,58 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
 	"log"
+	"os"
+	"os/user"
 	"regexp"
 )
-
-// Map -- A user defined combination of prefixes
-type Map struct {
-	prefixes []prefix
-}
 
 type prefix struct {
 	key string
 	url string
 }
 
-var myFirstPrefix = prefix{"joep", "https://app.argu.co/argu/u/joep"}
-var mySecondPrefix = prefix{"description", "http://schema.org/description"}
+var selector, _ = regexp.Compile(`(.*)=(.*)`)
 
-var prefixArray = []prefix{myFirstPrefix, mySecondPrefix}
-
-func readMap() Map {
-	return Map{prefixArray}
+func readMap(filePath string) []prefix {
+	file, err := os.Open(filePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var prefixes []prefix
+	scanner := bufio.NewScanner(file) // f is the *os.File
+	for scanner.Scan() {
+		line := scanner.Text()
+		matches := selector.FindStringSubmatch(line)
+		var p prefix
+		if len(matches) < 2 {
+			log.Fatal("Something is wrong with your mapping file.")
+		}
+		p.key = matches[1]
+		p.url = matches[2]
+		prefixes = append(prefixes, p)
+	}
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+	return prefixes
 }
 
-var myMap = readMap()
+func getAllMaps() []prefix {
+	var allPrefixes []prefix
+	allPrefixes = append(allPrefixes, readMap("defaultMapping")...)
+
+	usr, err := user.Current()
+	if err != nil {
+		log.Fatal(err)
+	}
+	userMappingLocation := fmt.Sprintf("%v/.ldget/mapping", usr.HomeDir)
+
+	allPrefixes = append(allPrefixes, readMap(userMappingLocation)...)
+	return allPrefixes
+}
 
 // Mapper -- converts a mappeed string to a URI
 func Mapper(str string) string {
@@ -36,7 +64,7 @@ func Mapper(str string) string {
 	if matched {
 		return output
 	}
-	for _, prefix := range myMap.prefixes {
+	for _, prefix := range getAllMaps() {
 		if prefix.key == str {
 			output = prefix.url
 			break
