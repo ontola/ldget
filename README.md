@@ -3,6 +3,12 @@
 
 A simple command line interface tool to get RDF items using HTTP GET requests.
 
+## When should you use this?
+
+- You need RDF data as Stdout.
+- You want to write bash scripts that use linked data.
+- You need to check triple values from inside your terminal.
+
 ## Installation
 
 - On MacOS using [homebrew](https://brew.sh/): `$ brew tap ontola/ldget https://github.com/ontola/ldget.git && brew install ontola/ldget/ldget`
@@ -12,12 +18,6 @@ A simple command line interface tool to get RDF items using HTTP GET requests.
 - `$ ldget object ${subjectIRI} ${predicateIRI}` => returns the values of the objects that match
 - `$ ldget help` => help file
 - `$ ldget prefixes` => shows your configured prefixes
-
-## Why should you use this?
-
-- You need RDF data as Stdout.
-- You want to write bash scripts that use linked data.
-- You need to check triple values from inside your terminal.
 
 ## Prefixes
 
