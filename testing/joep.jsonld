@@ -1,0 +1,198 @@
+{
+  "@context": {
+    "pav": "http://purl.org/pav/",
+    "person": "http://www.w3.org/ns/person#",
+    "prov": "http://www.w3.org/ns/prov#",
+    "schema": "http://schema.org/",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "wdata": "https://www.wikidata.org/wiki/Special:EntityData/",
+    "wd": "http://www.wikidata.org/entity/",
+    "wds": "wd:statement/",
+    "wdref": "http://www.wikidata.org/reference/",
+    "wdv": "http://www.wikidata.org/value/",
+    "wdt": "http://www.wikidata.org/prop/direct/",
+    "xmlns": "http://www.w3.org/2000/xmlns/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "rdfv": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "http": "http://www.w3.org/2011/http#",
+    "time": "http://www.w3.org/2006/time#",
+    "argu": "https://argu.co/ns/core#",
+    "mapping": "https://argu.co/voc/mapping/",
+    "meeting": "https://argu.co/ns/meeting/",
+    "meta": "https://argu.co/ns/meta#",
+    "ontola": "https://ns.ontola.io/",
+    "ori": "https://id.openraadsinformatie.nl/",
+    "as": "https://www.w3.org/ns/activitystreams#",
+    "bibframe": "http://bibframe.org/vocab/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "bio": "http://purl.org/vocab/bio/0.1/",
+    "cc": "http://creativecommons.org/ns#",
+    "cube": "http://purl.org/linked-data/cube#",
+    "dbo": "http://dbpedia.org/ontology/",
+    "dc": "http://purl.org/dc/terms/",
+    "dbpedia": "http://dbpedia.org/resource/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "ll": "http://purl.org/link-lib/",
+    "ncal": "http://www.semanticdesktop.org/ontologies/2007/04/02/ncal#",
+    "opengov": "http://www.w3.org/ns/opengov#",
+    "org": "http://www.w3.org/ns/org#",
+    "p": "http://www.wikidata.org/prop/"
+  },
+  "@graph": [
+    {
+      "@id": "ll:add",
+      "@graph": [
+        {
+          "@id": "https://argu.co/argu/u/joep",
+          "schema:name": "Joep Meindertsma"
+        }
+      ]
+    },
+    {
+      "@id": "https://argu.co/argu/u/joep",
+      "argu:destroyAction": {
+        "@id": "https://argu.co/argu/u/joep/delete"
+      },
+      "schema:datePublished": {
+        "@value": "2014-11-28T04:13:43+01:00",
+        "@type": "xsd:dateTime"
+      },
+      "argu:public": {
+        "@value": "true",
+        "@type": "xsd:boolean"
+      },
+      "argu:feed": {
+        "@id": "https://argu.co/argu/u/joep/feed"
+      },
+      "schema:dateCreated": {
+        "@value": "2014-11-28T04:13:43+01:00",
+        "@type": "xsd:dateTime"
+      },
+      "schema:potentialAction": [
+        {
+          "@id": "https://argu.co/argu/u/joep/edit"
+        },
+        {
+          "@id": "https://argu.co/argu/u/language"
+        },
+        {
+          "@id": "https://argu.co/argu/u/joep/edit?form=notifications"
+        },
+        {
+          "@id": "https://argu.co/argu/u/joep/edit?form=privacy"
+        },
+        {
+          "@id": "https://argu.co/argu/u/setup"
+        },
+        {
+          "@id": "https://argu.co/argu/u/joep/email_addresses/new"
+        },
+        {
+          "@id": "https://argu.co/argu/u/joep/edit?form=authentication"
+        },
+        {
+          "@id": "https://argu.co/argu/u/joep/o/new"
+        },
+        {
+          "@id": "https://argu.co/argu/u/joep/delete"
+        }
+      ],
+      "schema:description": "Liefhebber van discussiëren, ontwerpen en problemen oplossen. Een van de mede-oprichters van Argu.",
+      "argu:setupAction": {
+        "@id": "https://argu.co/argu/u/setup"
+      },
+      "@type": "schema:Person",
+      "argu:authenticationAction": {
+        "@id": "https://argu.co/argu/u/joep/edit?form=authentication"
+      },
+      "argu:createAction": [
+        {
+          "@id": "https://argu.co/argu/u/joep/o/new"
+        },
+        {
+          "@id": "https://argu.co/argu/u/joep/email_addresses/new"
+        }
+      ],
+      "schema:image": {
+        "@id": "https://argu.co/argu/media_objects/825"
+      },
+      "argu:updateAction": {
+        "@id": "https://argu.co/argu/u/joep/edit"
+      },
+      "dc:identifier": {
+        "@id": "https://argu.co/u/1"
+      },
+      "argu:notificationsAction": {
+        "@id": "https://argu.co/argu/u/joep/edit?form=notifications"
+      },
+      "argu:profile": {
+        "@id": "https://argu.co/argu/u/joep"
+      },
+      "argu:settingsMenu": {
+        "@id": "https://argu.co/argu/u/settings"
+      },
+      "argu:privacyAction": {
+        "@id": "https://argu.co/argu/u/joep/edit?form=privacy"
+      },
+      "schema:dateModified": {
+        "@value": "2019-05-06T11:35:51+02:00",
+        "@type": "xsd:dateTime"
+      },
+      "argu:votesPublic": {
+        "@value": "false",
+        "@type": "xsd:boolean"
+      },
+      "argu:coverPhoto": {
+        "@id": "https://argu.co/argu/media_objects/4193"
+      },
+      "argu:languageAction": {
+        "@id": "https://argu.co/argu/u/language"
+      }
+    },
+    {
+      "@id": "https://argu.co/argu/media_objects/825",
+      "argu:imgUrl568x400": {
+        "@id": "https://argu.co/argu/argu/media_objects/825/content/box"
+      },
+      "schema:uploadDate": {
+        "@value": "2016-06-01T16:50:02+02:00",
+        "@type": "xsd:dateTime"
+      },
+      "schema:datePublished": {
+        "@value": "2016-06-01T16:50:02+02:00",
+        "@type": "xsd:dateTime"
+      },
+      "schema:isPartOf": {
+        "@id": "https://argu.co/argu/u/joep"
+      },
+      "schema:encodingFormat": "image/jpeg",
+      "schema:contentUrl": {
+        "@id": "https://argu.co/argu/argu/media_objects/825/content/content"
+      },
+      "@type": "schema:ImageObject",
+      "argu:imgUrl256x256": {
+        "@id": "https://argu.co/argu/argu/media_objects/825/content/avatar"
+      },
+      "schema:url": {
+        "@id": "https://argu.co/argu/argu/media_objects/825/content/default"
+      },
+      "dc:identifier": {
+        "@id": "https://argu.co/media_objects/825"
+      },
+      "argu:imgUrl64x64": {
+        "@id": "https://argu.co/argu/argu/media_objects/825/content/icon"
+      },
+      "schema:thumbnail": {
+        "@id": "https://argu.co/argu/argu/media_objects/825/content/thumbnail"
+      },
+      "argu:imgUrl1500x600": {
+        "@id": "https://argu.co/argu/argu/media_objects/825/content/cover"
+      }
+    }
+  ]
+}%

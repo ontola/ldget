@@ -1,0 +1,5 @@
+description=http://schema.org/description
+schema=http://schema.org/
+joep=https://app.argu.co/argu/u/joep
+thom=https://app.argu.co/argu/u/fletcher91
+class=https://www.w3.org/TR/rdf-schema/#ch_class

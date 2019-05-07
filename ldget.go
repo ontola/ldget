@@ -105,7 +105,6 @@ func getArgs(c *cli.Context) args {
 		arguments.object = c.String("object")
 	}
 	arguments.subject = Mapper(arguments.subject)
-	// fmt.Println(arguments.subject)
 	if c.String("resource") != "" {
 		arguments.resourceURL = c.String("resource")
 	} else {

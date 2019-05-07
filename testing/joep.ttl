@@ -1,0 +1,37 @@
+@prefix argu: <https://argu.co/ns/core#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix rdfv: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://app.argu.co/argu/u/joep> a schema:Person;
+   dc:identifier <https://argu.co/u/1>;
+   schema:dateCreated "2014-11-28T04:13:43+01:00"^^xsd:dateTime;
+   schema:dateModified "2019-05-06T11:35:51+02:00"^^xsd:dateTime;
+   schema:datePublished "2014-11-28T04:13:43+01:00"^^xsd:dateTime;
+   schema:description "Liefhebber van discussiëren, ontwerpen en problemen oplossen. Een van de mede-oprichters van Argu.";
+   schema:image <https://argu.co/argu/media_objects/825>;
+   schema:potentialAction <https://argu.co/argu/u/language>,
+     <https://argu.co/argu/u/setup>,
+     <https://argu.co/argu/u/joep/edit?form=notifications>,
+     <https://argu.co/argu/u/joep/edit>,
+     <https://argu.co/argu/u/joep/email_addresses/new>,
+     <https://argu.co/argu/u/joep/delete>,
+     <https://argu.co/argu/u/joep/edit?form=privacy>,
+     <https://argu.co/argu/u/joep/edit?form=authentication>,
+     <https://argu.co/argu/u/joep/o/new>;
+   argu:authenticationAction <https://argu.co/argu/u/joep/edit?form=authentication>;
+   argu:coverPhoto <https://argu.co/argu/media_objects/4193>;
+   argu:createAction <https://argu.co/argu/u/joep/email_addresses/new>,
+     <https://argu.co/argu/u/joep/o/new>;
+   argu:destroyAction <https://argu.co/argu/u/joep/delete>;
+   argu:feed <https://argu.co/argu/u/joep/feed>;
+   argu:languageAction <https://argu.co/argu/u/language>;
+   argu:notificationsAction <https://argu.co/argu/u/joep/edit?form=notifications>;
+   argu:privacyAction <https://argu.co/argu/u/joep/edit?form=privacy>;
+   argu:profile <https://argu.co/argu/u/joep>;
+   argu:public true;
+   argu:settingsMenu <https://argu.co/argu/u/settings>;
+   argu:setupAction <https://argu.co/argu/u/setup>;
+   argu:updateAction <https://argu.co/argu/u/joep/edit>;
+   argu:votesPublic false .

@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<rdf:RDF xmlns:argu='https://argu.co/ns/core#' xmlns:dc='http://purl.org/dc/terms/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:schema='http://schema.org/' xmlns:xsd='http://www.w3.org/2001/XMLSchema#'>
+<schema:ImageObject rdf:about='https://argu.co/argu/media_objects/825'>
+<dc:identifier rdf:resource='https://argu.co/media_objects/825' />
+
+<schema:contentUrl rdf:resource='https://argu.co/argu/argu/media_objects/825/content/content' />
+
+<schema:datePublished rdf:datatype='http://www.w3.org/2001/XMLSchema#dateTime'>2016-06-01T16:50:02+02:00</schema:datePublished>
+
+<schema:encodingFormat>image/jpeg</schema:encodingFormat>
+
+<schema:isPartOf>
+<schema:Person rdf:about='https://app.argu.co/argu/u/joep'>
+<dc:identifier rdf:resource='https://argu.co/u/1' />
+
+<schema:dateCreated rdf:datatype='http://www.w3.org/2001/XMLSchema#dateTime'>2014-11-28T04:13:43+01:00</schema:dateCreated>
+
+<schema:dateModified rdf:datatype='http://www.w3.org/2001/XMLSchema#dateTime'>2019-05-06T11:35:51+02:00</schema:dateModified>
+
+<schema:datePublished rdf:datatype='http://www.w3.org/2001/XMLSchema#dateTime'>2014-11-28T04:13:43+01:00</schema:datePublished>
+
+<schema:description>Liefhebber van discussiëren, ontwerpen en problemen oplossen. Een van de mede-oprichters van Argu.</schema:description>
+
+<schema:image rdf:resource='https://argu.co/argu/media_objects/825' />
+
+<schema:potentialAction rdf:resource='https://app.argu.co/argu/u/joep/o/new' />
+ <schema:potentialAction rdf:resource='https://argu.co/argu/u/setup' />
+ <schema:potentialAction rdf:resource='https://app.argu.co/argu/u/joep/edit?form=authentication' />
+ <schema:potentialAction rdf:resource='https://app.argu.co/argu/u/joep/edit?form=notifications' />
+ <schema:potentialAction rdf:resource='https://app.argu.co/argu/u/joep/edit?form=privacy' />
+ <schema:potentialAction rdf:resource='https://argu.co/argu/u/language' />
+ <schema:potentialAction rdf:resource='https://app.argu.co/argu/u/joep/delete' />
+ <schema:potentialAction rdf:resource='https://app.argu.co/argu/u/joep/email_addresses/new' />
+ <schema:potentialAction rdf:resource='https://app.argu.co/argu/u/joep/edit' />
+
+<argu:authenticationAction rdf:resource='https://app.argu.co/argu/u/joep/edit?form=authentication' />
+
+<argu:coverPhoto rdf:resource='https://argu.co/argu/media_objects/4193' />
+
+<argu:createAction rdf:resource='https://app.argu.co/argu/u/joep/o/new' />
+ <argu:createAction rdf:resource='https://app.argu.co/argu/u/joep/email_addresses/new' />
+
+<argu:destroyAction rdf:resource='https://app.argu.co/argu/u/joep/delete' />
+
+<argu:feed rdf:resource='https://app.argu.co/argu/u/joep/feed' />
+
+<argu:languageAction rdf:resource='https://argu.co/argu/u/language' />
+
+<argu:notificationsAction rdf:resource='https://app.argu.co/argu/u/joep/edit?form=notifications' />
+
+<argu:privacyAction rdf:resource='https://app.argu.co/argu/u/joep/edit?form=privacy' />
+
+<argu:profile rdf:resource='https://app.argu.co/argu/u/joep' />
+
+<argu:public rdf:datatype='http://www.w3.org/2001/XMLSchema#boolean'>true</argu:public>
+
+<argu:settingsMenu rdf:resource='https://argu.co/argu/u/settings' />
+
+<argu:setupAction rdf:resource='https://argu.co/argu/u/setup' />
+
+<argu:updateAction rdf:resource='https://app.argu.co/argu/u/joep/edit' />
+
+<argu:votesPublic rdf:datatype='http://www.w3.org/2001/XMLSchema#boolean'>false</argu:votesPublic>
+
+</schema:Person>
+
+</schema:isPartOf>
+
+<schema:thumbnail rdf:resource='https://argu.co/argu/argu/media_objects/825/content/thumbnail' />
+
+<schema:uploadDate rdf:datatype='http://www.w3.org/2001/XMLSchema#dateTime'>2016-06-01T16:50:02+02:00</schema:uploadDate>
+
+<schema:url rdf:resource='https://argu.co/argu/argu/media_objects/825/content/default' />
+
+<argu:imgUrl1500x600 rdf:resource='https://argu.co/argu/argu/media_objects/825/content/cover' />
+
+<argu:imgUrl256x256 rdf:resource='https://argu.co/argu/argu/media_objects/825/content/avatar' />
+
+<argu:imgUrl568x400 rdf:resource='https://argu.co/argu/argu/media_objects/825/content/box' />
+
+<argu:imgUrl64x64 rdf:resource='https://argu.co/argu/argu/media_objects/825/content/icon' />
+
+</schema:ImageObject>
+
+</rdf:RDF>
