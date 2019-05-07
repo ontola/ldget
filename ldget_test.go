@@ -18,6 +18,10 @@ var objectTests = []struct {
 	out string
 }{
 	{[]string{appname, "objects", "https://app.argu.co/argu/u/joep", "http://schema.org/description", "--resource=http://localhost:8080/joep.rdf"}, description},
+	{[]string{appname, "objects", "https://app.argu.co/argu/u/joep", "http://schema.org/description", "--resource=http://localhost:8080/joep.ttl"}, description},
+	// {[]string{appname, "objects", "https://app.argu.co/argu/u/joep", "http://schema.org/description", "--resource=http://localhost:8080/joep.nt"}, description},
+	// {[]string{appname, "objects", "https://app.argu.co/argu/u/joep", "http://schema.org/description", "--resource=http://localhost:8080/joep.n3"}, description},
+	// {[]string{appname, "objects", "https://app.argu.co/argu/u/joep", "http://schema.org/description", "--resource=http://localhost:8080/joep.jsonld"}, description},
 }
 
 func TestObjectParser(t *testing.T) {
@@ -31,7 +35,7 @@ func TestObjectParser(t *testing.T) {
 		if tt.out != out {
 			t.Error(fmt.Sprintf("Expected: \n%vGot:\n%v", tt.out, out))
 		} else {
-			fmt.Print("PASS\n")
+			fmt.Print(" -- PASS\n")
 		}
 	}
 }
