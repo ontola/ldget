@@ -10,6 +10,9 @@ import (
 	"github.com/urfave/cli"
 )
 
+// Overwrite these using ldflags
+var version = "dev"
+
 func main() {
 	run(os.Args)
 }
@@ -17,7 +20,7 @@ func main() {
 func run(args []string) {
 	app := cli.NewApp()
 	app.Name = "Linked Data Get"
-	app.Version = "0.0.2"
+	app.Version = version
 	app.Compiled = time.Now()
 	app.Usage = "Get your RDF data, straight to your favorite terminal! Flags have precedence over arguments."
 	app.Authors = []cli.Author{
