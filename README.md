@@ -24,11 +24,10 @@ schema=http://schema.org/
 
 `ldget objects https://argu.co/argu/u/joep schema:description`.
 
-## Run locally
+## Install
 
 - `git clone https://bitbucket.org/joepio/argu-cli`
 - `go install`
-- `ldget objects https://app.argu.co/argu/u/joep http://schema.org/description"`
 
 ## Test
 
