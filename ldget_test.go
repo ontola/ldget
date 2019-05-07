@@ -16,8 +16,6 @@ var objectTests = []struct {
 	out string
 }{
 	{[]string{appname, "objects", "https://app.argu.co/argu/u/joep", "http://schema.org/description"}, description},
-	{[]string{appname, "objects", "joep", "schema:description"}, description},
-	{[]string{appname, "objects", "joep", "description"}, description},
 }
 
 func TestObjectParser(t *testing.T) {
