@@ -5,17 +5,15 @@ A simple command line interface tool to get RDF items using HTTP GET requests.
 
 Not yet ready for prime time, still in development.
 
-## When should you use this?
+## Usage
+
+- `ldget object ${subjectIRI} ${predicateIRI}` => returns the values of the objects that match
+
+## Why should you use this?
 
 - You need RDF data as Stdout.
 - You want to write bash scripts that use linked data.
-- You need to check triple values quite often from inside your terminal.
-
-## Run locally
-
-- `git clone https://bitbucket.org/joepio/argu-cli`
-- `go install`
-- `ldget objects https://app.argu.co/argu/u/joep http://schema.org/description"`
+- You need to check triple values from inside your terminal.
 
 ## Prefixes
 
@@ -27,6 +25,12 @@ schema=http://schema.org/
 ```
 
 `ldget objects https://argu.co/argu/u/joep schema:description`.
+
+## Run locally
+
+- `git clone https://bitbucket.org/joepio/argu-cli`
+- `go install`
+- `ldget objects https://app.argu.co/argu/u/joep http://schema.org/description"`
 
 ## Test
 
