@@ -109,4 +109,3 @@ brew:
   # Default is 'bin.install "program"'.
   install: |
     bin.install "program"
-    ...

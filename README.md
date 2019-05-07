@@ -3,6 +3,10 @@
 
 A simple command line interface tool to get RDF items using HTTP GET requests.
 
+## Installation
+
+- On MacOS using [homebrew](https://brew.sh/): `$ brew tap ontola/ldget https://github.com/ontola/ldget.git && brew install ontola/ldget`
+
 ## Usage
 
 - `$ ldget object ${subjectIRI} ${predicateIRI}` => returns the values of the objects that match
