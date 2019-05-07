@@ -84,14 +84,14 @@ brew:
   #   ...
 
   # Packages your package depends on.
-  dependencies:
-    - git
-    - zsh
+  # dependencies:
+  #   - git
+  #   - zsh
 
   # Packages that conflict with your package.
-  conflicts:
-    - svn
-    - bash
+  # conflicts:
+  #   - svn
+  #   - bash
 
   # Specify for packages that run as a service.
   # Default is empty.
@@ -107,5 +107,5 @@ brew:
 
   # Custom install script for brew.
   # Default is 'bin.install "program"'.
-  install: |
-    bin.install "program"
+  # install: |
+  #   bin.install "program"
