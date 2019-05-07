@@ -1,5 +1,5 @@
 # ldget
-[![Build Status](https://travis-ci.org/ontola/active_response.svg?branch=master)](https://travis-ci.org/ontola/active_response)
+[![Build Status](https://travis-ci.org/ontola/active_response.svg?branch=master)](https://travis-ci.org/ontola/active_response) ![GitHub](https://img.shields.io/github/license/ontola/ldget.svg)
 
 A simple command line interface tool to get RDF items using HTTP GET requests.
 
