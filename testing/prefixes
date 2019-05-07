@@ -1,5 +1,6 @@
 description=http://schema.org/description
 schema=http://schema.org/
+class=https://www.w3.org/TR/rdf-schema/#ch_class
+# Prefix comment
 joep=https://app.argu.co/argu/u/joep
 thom=https://app.argu.co/argu/u/fletcher91
-class=https://www.w3.org/TR/rdf-schema/#ch_class

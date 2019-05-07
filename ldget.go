@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"text/tabwriter"
 	"time"
 
 	"github.com/urfave/cli"
@@ -69,6 +70,20 @@ func run(args []string) {
 					for _, element := range hits {
 						fmt.Println(element.Obj)
 					}
+				}
+				return nil
+			},
+		},
+
+		{
+			Name:  "prefixes",
+			Usage: "Shows your user defined prefixes from  `~/.ldget/prefixes`.",
+			Action: func(c *cli.Context) error {
+				for _, mapItem := range getAllMaps() {
+					w := new(tabwriter.Writer)
+					w.Init(os.Stdout, 15, 8, 0, '\t', 0)
+					fmt.Fprintf(w, "%v\t%v\t\n", mapItem.key, mapItem.url)
+					w.Flush()
 				}
 				return nil
 			},

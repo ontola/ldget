@@ -7,53 +7,13 @@ import (
 	"os"
 	"os/user"
 	"regexp"
+	"strings"
 )
 
 type prefix struct {
 	key string
 	url string
 }
-
-var selector, _ = regexp.Compile(`(.*)=(.*)`)
-
-func readMap(filePath string) []prefix {
-	file, err := os.Open(filePath)
-	if err != nil {
-		log.Fatal(err)
-	}
-	var prefixes []prefix
-	scanner := bufio.NewScanner(file) // f is the *os.File
-	for scanner.Scan() {
-		line := scanner.Text()
-		matches := selector.FindStringSubmatch(line)
-		var p prefix
-		if len(matches) < 2 {
-			log.Fatal("Something is wrong with your prefixes file.")
-		}
-		p.key = matches[1]
-		p.url = matches[2]
-		prefixes = append(prefixes, p)
-	}
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
-	return prefixes
-}
-
-func getAllMaps() []prefix {
-	var allPrefixes []prefix
-
-	usr, err := user.Current()
-	if err != nil {
-		log.Fatal(err)
-	}
-	userMappingLocation := fmt.Sprintf("%v/.ldget/prefixes", usr.HomeDir)
-
-	allPrefixes = append(allPrefixes, readMap(userMappingLocation)...)
-	return allPrefixes
-}
-
-var colonCheck, _ = regexp.Compile(`(.*):(.*)`)
 
 // Mapper -- converts a mapped prefix to a URI
 func Mapper(str string) string {
@@ -78,6 +38,52 @@ func Mapper(str string) string {
 
 	return output
 }
+
+// Regex for the user's ~/.ldget/prefixes file
+var selector, _ = regexp.Compile(`(.*)=(.*)`)
+
+func readMap(filePath string) []prefix {
+	file, err := os.Open(filePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var prefixes []prefix
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
+		// Lines that start with # are comments
+		if strings.HasPrefix(line, "#") {
+			continue
+		}
+		matches := selector.FindStringSubmatch(line)
+		if len(matches) < 2 {
+			log.Fatal("Something is wrong with your prefixes file.")
+		}
+		var p prefix
+		p.key = matches[1]
+		p.url = matches[2]
+		prefixes = append(prefixes, p)
+	}
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+	return prefixes
+}
+
+func getAllMaps() []prefix {
+	var allPrefixes []prefix
+
+	usr, err := user.Current()
+	if err != nil {
+		log.Fatal(err)
+	}
+	userMappingLocation := fmt.Sprintf("%v/.ldget/prefixes", usr.HomeDir)
+
+	allPrefixes = append(allPrefixes, readMap(userMappingLocation)...)
+	return allPrefixes
+}
+
+var colonCheck, _ = regexp.Compile(`(.*):(.*)`)
 
 // Returns URL for some prefix
 func getPrefix(key string) string {
