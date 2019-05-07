@@ -7,6 +7,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/knakk/rdf"
 	"github.com/urfave/cli"
 )
 
@@ -59,15 +60,14 @@ func run(args []string) {
 				if err != nil {
 					return err
 				}
-				allTriples, err := Parse(resp.Body)
+				format := rdf.NTriples
+				allTriples, err := Parse(resp.Body, format)
 				hits := filterTriples(allTriples, args.subject, args.predicate, args.object)
 				if len(hits) == 0 {
 					log.Fatal("Not found")
-				} else if hits[0] == nil {
-					log.Fatal("Found, but no object in triple")
 				} else {
 					for _, element := range hits {
-						fmt.Println(element.object)
+						fmt.Println(element.Obj)
 					}
 				}
 				return nil
@@ -105,6 +105,7 @@ func getArgs(c *cli.Context) args {
 		arguments.object = c.String("object")
 	}
 	arguments.subject = Mapper(arguments.subject)
+	// fmt.Println(arguments.subject)
 	if c.String("resource") != "" {
 		arguments.resourceURL = c.String("resource")
 	} else {
@@ -112,7 +113,7 @@ func getArgs(c *cli.Context) args {
 			log.Fatal("No resource or subject provided. See --help.")
 		}
 		// TODO: use content negotiation
-		arguments.resourceURL = fmt.Sprintf("%v.nq", arguments.subject)
+		arguments.resourceURL = fmt.Sprintf("%v.nt", arguments.subject)
 	}
 	arguments.predicate = Mapper(arguments.predicate)
 
