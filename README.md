@@ -20,15 +20,16 @@ You can specify a set of prefixes in `~/.ldget/prefixes` for mapping URLS to sho
 
 ```
 schema=http://schema.org/
+joep=https://argu.co/argu/u/joep
 ```
 
-`ldget objects https://argu.co/argu/u/joep schema:description`.
+`ldget objects joep schema:description`.
 
 ## Install
 
-- `git clone https://bitbucket.org/joepio/argu-cli`
+- `git clone git@github.com:ontola/ldget.git`
 - `go install`
 
 ## Test
 
-`go test`
+- `go test`
