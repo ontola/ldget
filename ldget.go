@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 	"time"
 
@@ -56,12 +55,15 @@ func run(args []string) {
 			Flags:   myFlags,
 			Action: func(c *cli.Context) error {
 				args := getArgs(c)
-				resp, err := http.Get(args.resourceURL)
+				resp, err := Negotiator(args.resourceURL)
 				if err != nil {
 					return err
 				}
 				format := rdf.NTriples
 				allTriples, err := Parse(resp.Body, format)
+				if err != nil {
+					return err
+				}
 				hits := filterTriples(allTriples, args.subject, args.predicate, args.object)
 				if len(hits) == 0 {
 					log.Fatal("Not found")
