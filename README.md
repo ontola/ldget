@@ -1,8 +1,15 @@
-# LDT: Linked Data Tool
+# ldget
 
-A simple command line interface tool to get and manipulate RDF items.
-Only supports N-Quads.
+A simple command line interface tool to get RDF items using HTTP GET requests.
 Not yet ready for prime time, still in development.
+
+## When should you use this?
+
+- You need RDF data as Stdout.
+- finder
+
+- You want to write bash scripts that use linked data.
+- You need to check triple values quite often from inside your terminal.
 
 ## Run locally
 
@@ -16,12 +23,10 @@ URLs are awesome, but they are cumbersome to remember and type.
 You can specify a set of prefixes in `~/.ldget/prefixes` for mapping URLS to shorthands.
 
 ```
-// in ~/.ldget/prefixes
-joep=https://app.argu.co/argu/u/joep
 schema=http://schema.org/
 ```
 
-If you have a prefixes, you can use shorthand prefixes: `ldget objects joep schema:description"`.
+If you have a prefixes, you can use shorthand prefixes: `ldget objects https://argu.co/argu/u/joep schema:description"`.
 
 ## Test
 
