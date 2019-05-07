@@ -5,7 +5,9 @@ A simple command line interface tool to get RDF items using HTTP GET requests.
 
 ## Usage
 
-- `ldget object ${subjectIRI} ${predicateIRI}` => returns the values of the objects that match
+- `$ ldget object ${subjectIRI} ${predicateIRI}` => returns the values of the objects that match
+- `$ ldget help` => help file
+- `$ ldget prefixes` => shows your configured prefixes
 
 ## Why should you use this?
 
@@ -23,13 +25,13 @@ schema=http://schema.org/
 joep=https://argu.co/argu/u/joep
 ```
 
-`ldget objects joep schema:description`.
+`$ ldget objects joep schema:description`
 
 ## Install
 
-- `git clone git@github.com:ontola/ldget.git`
-- `go install`
+- `$ git clone git@github.com:ontola/ldget.git`
+- `$ go install`
 
 ## Test
 
-- `go test`
+- `$ go test`
