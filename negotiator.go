@@ -10,8 +10,6 @@ import (
 
 // Negotiator -- Tries to fetch a resource using HTTP content negotiation
 func Negotiator(url string) (*http.Response, rdf.Format, error) {
-	// resp, err := http.Get(url)
-
 	client := &http.Client{}
 
 	req, err := http.NewRequest("GET", url, nil)
@@ -22,6 +20,9 @@ func Negotiator(url string) (*http.Response, rdf.Format, error) {
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
+	}
+	if resp.StatusCode != 200 {
+		log.Fatalf("HTTP status code: %v\n", resp.StatusCode)
 	}
 	respType := resp.Header.Get("Content-Type")
 	if respType == "" {
