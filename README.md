@@ -34,7 +34,8 @@ joep=https://argu.co/argu/u/joep
 ## Install
 
 - `$ git clone git@github.com:ontola/ldget.git`
-- `$ go install`
+- `$ go get ./..` Install all dependencies
+- `$ go install` Install binary
 
 ## Test
 
