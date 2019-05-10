@@ -11,7 +11,7 @@ import (
 )
 
 // Overwrite these using ldflags
-var version = "dev"
+var version = fmt.Sprintf("dev%v", time.Now().Format(time.RFC3339))
 
 func main() {
 	run(os.Args)
