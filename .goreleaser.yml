@@ -67,7 +67,7 @@ snapcraft:
 
   # Your app's license, based on SPDX license expressions: https://spdx.org/licenses
   # Default is empty.
-  license: GPL-3.0-or-later
+  # license: GPL-3.0+
 
   # A snap of type base to be used as the execution environment for this snap.
   # Valid values are:
