@@ -34,7 +34,7 @@ brew:
   folder: Formula
   homepage: "https://github.com/ontola/ldget"
   description: "A simple command line interface tool to get RDF items using HTTP GET requests."
-napcraft:
+snapcraft:
   # Wether to publish the snap to the snapcraft store.
   # Remember you need to `snapcraft login` first.
   # Defaults to false.
@@ -48,20 +48,7 @@ napcraft:
   # most important story about your snap. Keep it under 100 words though,
   # we live in tweetspace and your description wants to look good in the snap
   # store.
-  description: |
-    A simple command line interface tool to get RDF items using HTTP GET requests. |
-|
-    When should you use this? |
-|
-    - You need RDF data as Stdout. |
-    - You want to write bash scripts that use linked data. |
-    - You need to check triple values from inside your terminal. |
-|
-    Usage |
-|
-    - `$ ldget object ${subjectIRI} ${predicateIRI}` => returns the values of the objects that match |
-    - `$ ldget help` => help file |
-    - `$ ldget prefixes` => shows your configured prefixes
+  description: A simple command line interface tool to get RDF items using HTTP GET requests.
   # A guardrail to prevent you from releasing a snap to all your users before
   # it is ready.
   # `devel` will let you release only to the `edge` and `beta` channels in the
