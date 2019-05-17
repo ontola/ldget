@@ -1,4 +1,24 @@
 language: go
-
 go:
 - 1.11.1
+addons:
+  apt:
+    packages:
+    - rpm
+    - snapd
+env:
+- PATH=/snap/bin:$PATH
+install:
+- sudo snap install snapcraft --classic
+after_success:
+- test -n "$TRAVIS_TAG" && snapcraft login --with snap.login
+deploy:
+- provider: script
+  skip_cleanup: true
+  script: curl -sL https://git.io/goreleaser | bash
+  on:
+    tags: true
+    condition: "$TRAVIS_OS_NAME = linux"
+before_install:
+- openssl aes-256-cbc -K $encrypted_5da9b715a547_key -iv $encrypted_5da9b715a547_iv
+  -in snap.login.enc -out snap.login -d
