@@ -38,7 +38,7 @@ snapcraft:
   # Wether to publish the snap to the snapcraft store.
   # Remember you need to `snapcraft login` first.
   # Defaults to false.
-  # publish: true
+  publish: true
 
   # Single-line elevator pitch for your amazing snap.
   # 79 char long at most.
@@ -67,18 +67,18 @@ snapcraft:
       - $HOME/.ldget
       write:
       - $HOME/.ldget
-nfpms:
-  # note that this is an array of nfpm configs
-  -
-    id: ldget
-    vendor: Ontola.io
-    homepage: https://github.com/ontola/ldget
-    maintainer: Joep Meindertsma <joep@ontola.io>
-    description: A simple command line interface tool to get RDF items using HTTP GET requests.
-    license: GPLv3
-    # Formats to be generated.
-    formats:
-      - deb
-      - rpm
-    empty_folders:
-      - ~/.ldget
+# nfpms:
+#   # note that this is an array of nfpm configs
+#   -
+#     id: ldget
+#     vendor: Ontola.io
+#     homepage: https://github.com/ontola/ldget
+#     maintainer: Joep Meindertsma <joep@ontola.io>
+#     description: A simple command line interface tool to get RDF items using HTTP GET requests.
+#     license: GPLv3
+#     # Formats to be generated.
+#     formats:
+#       - deb
+#       - rpm
+#     empty_folders:
+#       - ~/.ldget
