@@ -46,11 +46,63 @@ func run(args []string) {
 		},
 		cli.StringFlag{
 			Name:  "object, o",
-			Usage: "Filter by object value",
+			Usage: "Filter by object value.",
 		},
 	}
 
 	app.Commands = []cli.Command{
+		{
+			Name:    "triples",
+			Aliases: []string{"t", ""},
+			Usage:   "Fetch an RDF resource, return the triples. First argument filters by Subject, second by Predicate.",
+			Flags:   myFlags,
+			Action: func(c *cli.Context) error {
+				args := getArgs(c)
+				resp, format, err := Negotiator(args.resourceURL)
+				if err != nil {
+					return err
+				}
+				allTriples, err := Parse(resp.Body, format)
+				if err != nil {
+					return err
+				}
+				hits := filterTriples(allTriples, args.subject, args.predicate, args.object)
+				if len(hits) == 0 {
+					log.Fatal("No triple found that matches your query")
+				} else {
+					for _, element := range hits {
+						fmt.Println(element)
+					}
+				}
+				return nil
+			},
+		},
+		{
+			Name:    "predicates",
+			Aliases: []string{"p", ""},
+			Usage:   "Fetch an RDF resource, return the predicates. First argument filters by Subject, second by Predicate.",
+			Flags:   myFlags,
+			Action: func(c *cli.Context) error {
+				args := getArgs(c)
+				resp, format, err := Negotiator(args.resourceURL)
+				if err != nil {
+					return err
+				}
+				allTriples, err := Parse(resp.Body, format)
+				if err != nil {
+					return err
+				}
+				hits := filterTriples(allTriples, args.subject, args.predicate, args.object)
+				if len(hits) == 0 {
+					log.Fatal("No triple found that matches your query")
+				} else {
+					for _, element := range hits {
+						fmt.Println(element.Pred)
+					}
+				}
+				return nil
+			},
+		},
 		{
 			Name:    "objects",
 			Aliases: []string{"o"},
