@@ -3,7 +3,7 @@
 
 A simple command line interface tool to get RDF items using HTTP GET requests.
 
-[![asciicast](https://asciinema.org/a/BOc4JjKkTbMOwA2IvnJ7V3uhp.svg)](https://asciinema.org/a/BOc4JjKkTbMOwA2IvnJ7V3uhp)
+[![asciicast](demo.gif)](https://asciinema.org/a/BOc4JjKkTbMOwA2IvnJ7V3uhp)
 
 ## When should you use this?
 
