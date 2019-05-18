@@ -11,6 +11,7 @@ import (
 )
 
 var description = "Liefhebber van discussiëren, ontwerpen en problemen oplossen. Een van de mede-oprichters van Argu.\n"
+var ntriple = "<https://app.argu.co/argu/u/joep> <http://schema.org/description> \"Liefhebber van discussiëren, ontwerpen en problemen oplossen. Een van de mede-oprichters van Argu.\" .\n"
 var appname = os.Args[0:1][0]
 
 var objectTests = []struct {
@@ -22,6 +23,8 @@ var objectTests = []struct {
 	// {[]string{appname, "objects", "https://app.argu.co/argu/u/joep", "http://schema.org/description", "--resource=http://localhost:8080/joep.nt"}, description},
 	// {[]string{appname, "objects", "https://app.argu.co/argu/u/joep", "http://schema.org/description", "--resource=http://localhost:8080/joep.n3"}, description},
 	// {[]string{appname, "objects", "https://app.argu.co/argu/u/joep", "http://schema.org/description", "--resource=http://localhost:8080/joep.jsonld"}, description},
+	{[]string{appname, "triples", "https://app.argu.co/argu/u/joep", "http://schema.org/description", "--resource=http://localhost:8080/joep.ttl"}, ntriple},
+	{[]string{appname, "predicates", "https://app.argu.co/argu/u/joep", "http://schema.org/description", "--resource=http://localhost:8080/joep.ttl"}, "http://schema.org/description\n"},
 }
 
 func TestObjectParser(t *testing.T) {
