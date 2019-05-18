@@ -18,7 +18,9 @@ A simple command line interface tool to get RDF items using HTTP GET requests.
 
 ## Usage
 
-- `$ ldget object ${subjectIRI} ${predicateIRI}` => returns the values of the objects that match
+- `$ ldget triples ${subjectIRI} ${predicateIRI, optional}` => returns the triples that match
+- `$ ldget predicates ${subjectIRI} ${predicateIRI, optional}` => returns the predicates that match
+- `$ ldget objects ${subjectIRI} ${predicateIRI, optional}` => returns the objects that match
 - `$ ldget help` => help file
 - `$ ldget prefixes` => shows your configured prefixes
 
