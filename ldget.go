@@ -7,6 +7,7 @@ import (
 	"text/tabwriter"
 	"time"
 
+	"github.com/knakk/rdf"
 	"github.com/urfave/cli"
 )
 
@@ -58,22 +59,11 @@ func run(args []string) {
 			Flags:   myFlags,
 			Action: func(c *cli.Context) error {
 				args := getArgs(c)
-				resp, format, err := Negotiator(args.resourceURL)
-				if err != nil {
-					return err
-				}
-				allTriples, err := Parse(resp.Body, format)
-				if err != nil {
-					return err
-				}
-				hits := filterTriples(allTriples, args.subject, args.predicate, args.object)
-				if len(hits) == 0 {
-					log.Fatal("No triple found that matches your query")
-				} else {
-					for _, element := range hits {
-						fmt.Println(element)
-					}
-				}
+				hits := getTriples(args)
+				encoder := rdf.NewTripleEncoder(os.Stdout, rdf.NTriples)
+				encoder.GenerateNamespaces = true
+				encoder.EncodeAll(hits)
+				encoder.Close()
 				return nil
 			},
 		},
@@ -84,21 +74,9 @@ func run(args []string) {
 			Flags:   myFlags,
 			Action: func(c *cli.Context) error {
 				args := getArgs(c)
-				resp, format, err := Negotiator(args.resourceURL)
-				if err != nil {
-					return err
-				}
-				allTriples, err := Parse(resp.Body, format)
-				if err != nil {
-					return err
-				}
-				hits := filterTriples(allTriples, args.subject, args.predicate, args.object)
-				if len(hits) == 0 {
-					log.Fatal("No triple found that matches your query")
-				} else {
-					for _, element := range hits {
-						fmt.Println(element.Pred)
-					}
+				hits := getTriples(args)
+				for _, element := range hits {
+					fmt.Println(element.Pred)
 				}
 				return nil
 			},
@@ -110,21 +88,9 @@ func run(args []string) {
 			Flags:   myFlags,
 			Action: func(c *cli.Context) error {
 				args := getArgs(c)
-				resp, format, err := Negotiator(args.resourceURL)
-				if err != nil {
-					return err
-				}
-				allTriples, err := Parse(resp.Body, format)
-				if err != nil {
-					return err
-				}
-				hits := filterTriples(allTriples, args.subject, args.predicate, args.object)
-				if len(hits) == 0 {
-					log.Fatal("No triple found that matches your query")
-				} else {
-					for _, element := range hits {
-						fmt.Println(element.Obj)
-					}
+				hits := getTriples(args)
+				for _, element := range hits {
+					fmt.Println(element.Obj)
 				}
 				return nil
 			},

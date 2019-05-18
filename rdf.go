@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/knakk/rdf"
 	"io"
+	"log"
 )
 
 // Filter triples by subject, predicate, object
@@ -29,4 +30,21 @@ func Parse(body io.Reader, format rdf.Format) ([]rdf.Triple, error) {
 		triples = append(triples, triple)
 	}
 	return triples, nil
+}
+
+// Fetches triples for a set of arguments, returns the filtered triples
+func getTriples(a args) []rdf.Triple {
+	resp, format, err := Negotiator(a.resourceURL)
+	if err != nil {
+		log.Fatal(err)
+	}
+	allTriples, err := Parse(resp.Body, format)
+	if err != nil {
+		log.Fatal(err)
+	}
+	hits := filterTriples(allTriples, a.subject, a.predicate, a.object)
+	if len(hits) == 0 {
+		log.Fatal("No triple found that matches your query")
+	}
+	return hits
 }
