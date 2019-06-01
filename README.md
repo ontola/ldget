@@ -13,7 +13,6 @@ A simple command line interface tool to get RDF items using HTTP GET requests.
 
 ## Installation
 
-- On Linux distros using the [Snap store](https://snapcraft.io/ldget/)
 - On MacOS using [homebrew](https://brew.sh/): `$ brew tap ontola/ldget https://github.com/ontola/ldget.git && brew install ontola/ldget/ldget`
 - Or install the binaries from the [releases page](https://github.com/ontola/ldget/releases)
 - Or build it yourself. Clone this repo and run `go get ./... && go install` to install the dependencies and the binaries.
@@ -47,3 +46,9 @@ joep=https://argu.co/argu/u/joep
 ## Test
 
 - `$ go test`
+
+## Credits
+
+Written by Joep Meindertsma.
+
+Most of the hard work is done by the guys at Knakk, who wrote [this awesome RDF library for Go](https://github.com/knakk/rdf).
