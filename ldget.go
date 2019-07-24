@@ -55,7 +55,7 @@ func run(args []string) {
 		{
 			Name:    "triples",
 			Aliases: []string{"t", ""},
-			Usage:   "Fetch an RDF resource, return the triples. First argument filters by Subject, second by Predicate.",
+			Usage:   "Fetch an RDF resource, return the triples. `ldget t ?s ?p ?o`",
 			Flags:   myFlags,
 			Action: func(c *cli.Context) error {
 				args := getArgs(c)
@@ -70,7 +70,7 @@ func run(args []string) {
 		{
 			Name:    "predicates",
 			Aliases: []string{"p", ""},
-			Usage:   "Fetch an RDF resource, return the predicates. First argument filters by Subject, second by Predicate.",
+			Usage:   "Fetch an RDF resource, return the predicates. `ldget p ?s ?p ?o`",
 			Flags:   myFlags,
 			Action: func(c *cli.Context) error {
 				args := getArgs(c)
@@ -84,7 +84,7 @@ func run(args []string) {
 		{
 			Name:    "objects",
 			Aliases: []string{"o"},
-			Usage:   "Fetch an RDF resource, return the object values. First argument filters by Subject, second by Predicate.",
+			Usage:   "Fetch an RDF resource, return the object values. `ldget o ?s ?p ?o`",
 			Flags:   myFlags,
 			Action: func(c *cli.Context) error {
 				args := getArgs(c)
@@ -124,22 +124,47 @@ type args struct {
 	predicate   string
 }
 
+// Check if the input string should be interpreted as a wildcard
+func cleanUpArg(s string) string {
+	blankArgs := map[string]bool{
+		"": true,
+		// Does not work in zsh, formula?
+		// "*":    true,
+		// Does not work in zsh, wildcard
+		// "?":    true,
+		".":    true,
+		"null": true,
+		"nil":  true,
+	}
+
+	if blankArgs[s] {
+		return ""
+	}
+
+	return s
+}
+
 func getArgs(c *cli.Context) args {
 	var arguments args
 
-	arguments.subject = c.Args().Get(0)
-	arguments.predicate = c.Args().Get(1)
-	arguments.object = c.Args().Get(2)
+	subject := c.Args().Get(0)
+	predicate := c.Args().Get(1)
+	object := c.Args().Get(2)
 
 	if c.String("subject") != "" {
-		arguments.subject = c.String("subject")
+		subject = c.String("subject")
 	}
 	if c.String("predicate") != "" {
-		arguments.predicate = c.String("predicate")
+		predicate = c.String("predicate")
 	}
 	if c.String("object") != "" {
-		arguments.object = c.String("object")
+		object = c.String("object")
 	}
+
+	arguments.subject = cleanUpArg(subject)
+	arguments.predicate = cleanUpArg(predicate)
+	arguments.object = cleanUpArg(object)
+
 	arguments.subject = Mapper(arguments.subject)
 	if c.String("resource") != "" {
 		arguments.resourceURL = c.String("resource")
