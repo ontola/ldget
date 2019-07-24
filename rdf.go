@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/knakk/rdf"
 	"io"
 	"log"
+
+	"github.com/knakk/rdf"
 )
 
 // Filter triples by subject, predicate, object
@@ -38,6 +39,7 @@ func getTriples(a args) []rdf.Triple {
 	if err != nil {
 		log.Fatal(err)
 	}
+	// Parse the response, convert to triples
 	allTriples, err := Parse(resp.Body, format)
 	if err != nil {
 		log.Fatal(err)
