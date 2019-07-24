@@ -1,11 +1,15 @@
 package main
 
 import (
-	"github.com/knakk/rdf"
 	"net/http"
+
+	"github.com/knakk/rdf"
+
 	// "strings"d
 	"log"
 	"regexp"
+
+	rdfmimetypes "github.com/ontola/ldget/rdfmimetypes"
 )
 
 // Negotiator -- Tries to fetch a resource using HTTP content negotiation
@@ -33,11 +37,6 @@ func Negotiator(url string) (*http.Response, rdf.Format, error) {
 	return resp, format, err
 }
 
-type rdfFormatMapping struct {
-	header string
-	format rdf.Format
-}
-
 var acceptSelector, _ = regexp.Compile(`(.*);`)
 
 func findFormat(header string) rdf.Format {
@@ -46,9 +45,9 @@ func findFormat(header string) rdf.Format {
 	if len(matches) > 0 {
 		headerFixed = matches[1]
 	}
-	for _, mapping := range contentTypes {
-		if mapping.header == headerFixed {
-			return mapping.format
+	for _, mapping := range rdfmimetypes.ContentTypes {
+		if mapping.Header == headerFixed {
+			return mapping.Format
 		}
 	}
 	log.Fatalf("No valid Content-Type header present in server response. Does the resource URL support linked data? Header: %v", headerFixed)
@@ -58,28 +57,9 @@ func findFormat(header string) rdf.Format {
 // acceptString -- Returns a string of all the available MIME types
 func acceptString() string {
 	str := ""
-	for _, t := range contentTypes {
-		str += t.header
+	for _, t := range rdfmimetypes.ContentTypes {
+		str += t.Header
 		str += " ,"
 	}
 	return str
-}
-
-var contentTypes = []rdfFormatMapping{
-	{
-		header: "application/n-triples",
-		format: rdf.NTriples,
-	},
-	{
-		header: "application/rdf+xml",
-		format: rdf.RDFXML,
-	},
-	{
-		header: "application/x-turtle",
-		format: rdf.Turtle,
-	},
-	{
-		header: "text/turtle",
-		format: rdf.Turtle,
-	},
 }

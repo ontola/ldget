@@ -19,29 +19,35 @@ A simple command line interface tool to get RDF items using HTTP GET requests.
 
 ## Usage
 
-- `$ ldget triples ${subjectIRI} ${predicateIRI, optional}` => returns the triples that match
-- `$ ldget predicates ${subjectIRI} ${predicateIRI, optional}` => returns the predicates that match
-- `$ ldget objects ${subjectIRI} ${predicateIRI, optional}` => returns the objects that match
+- `$ ldget triples ?s ?p ?o` => fetches the subject (?s) URL, returns all triples that match
+- `$ ldget predicates ?s ?p ?o` => fetches the subject (?s) URL, returns the predicates that match
+- `$ ldget objects ?s ?p ?o` => fetches the subject (?s) URL, returns the objects that match
 - `$ ldget help` => help file
 - `$ ldget prefixes` => shows your configured prefixes
+
+`?s ?p ?o` stands for `%{subject URL} %{predicate URL} %{object value}`. This is similar to [Triple Pattern Fragments](http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/#bib-hydra-ldf).
+
+Use the `*` character as a wildcard. For example, if you want to get all triples for subject `http://example.com/X` with an object value of `"Value"`, use:
+
+`$ ldget t http://example.com/X * "Value"`
 
 ## Prefixes
 
 URLs are awesome, but they are cumbersome to remember and type.
-You can specify a set of prefixes in `~/.ldget/prefixes` for mapping URLS to shorthands.
+You can specify a set of prefixes in `~/.ldget/prefixes` for mapping URLs to shorthands.
 
 ```
 schema=http://schema.org/
 joep=https://argu.co/argu/u/joep
 ```
 
-`$ ldget objects joep schema:description`
+`$ ldget o joep schema:description`
 
 ## Install
 
-- `$ git clone git@github.com:ontola/ldget.git`
-- `$ go get ./..` Install all dependencies
-- `$ go install` Install binary
+- `$ git clone git@github.com:ontola/ldget.git && cd ldget` Clone repo, go to ldget folder
+- `$ go get ./...` Install all dependencies
+- `$ go install` Install binary to path
 
 ## Test
 
