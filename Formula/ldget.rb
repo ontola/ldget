@@ -2,9 +2,16 @@
 class Ldget < Formula
   desc "A simple command line interface tool to get RDF items using HTTP GET requests."
   homepage "https://github.com/ontola/ldget"
-  url "https://github.com/ontola/ldget/releases/download/v0.1.12/ldget_0.1.12_Darwin_x86_64.tar.gz"
-  version "0.1.12"
-  sha256 "9c79c8b5d3f08c9984c4a2a430900d9251d1e19b732661aa380fa9e3ac604b50"
+  version "0.2.2"
+  bottle :unneeded
+
+  if OS.mac?
+    url "https://github.com/ontola/ldget/releases/download/v0.2.2/ldget_0.2.2_Darwin_x86_64.tar.gz"
+    sha256 "8f4308f96a4783874f26f904a6f2b03deb818b895f9cc4d5d9e4640b23658e81"
+  elsif OS.linux?
+    url "https://github.com/ontola/ldget/releases/download/v0.2.2/ldget_0.2.2_Linux_x86_64.tar.gz"
+    sha256 "8821aa9aca898adbfa010bdefc52d646634db1e695fd6d662fef47847c91a054"
+  end
 
   def install
     bin.install "ldget"
