@@ -20,14 +20,14 @@ func main() {
 
 func run(args []string) {
 	app := cli.NewApp()
-	app.Name = "Linked Data Get"
+	app.Name = "ldget"
 	app.Version = version
 	app.Compiled = time.Now()
 	app.Usage = "Get your RDF data, straight to your favorite terminal! Flags have precedence over arguments."
 	app.Authors = []cli.Author{
 		cli.Author{
 			Name:  "Joep Meindertsma",
-			Email: "joep@argu.co",
+			Email: "joep@ontola.io",
 		},
 	}
 	app.EnableBashCompletion = true
@@ -95,7 +95,6 @@ func run(args []string) {
 				return nil
 			},
 		},
-
 		{
 			Name:  "prefixes",
 			Usage: "Shows your user defined prefixes from  `~/.ldget/prefixes`.",
@@ -105,6 +104,21 @@ func run(args []string) {
 					w.Init(os.Stdout, 15, 8, 0, '\t', 0)
 					fmt.Fprintf(w, "%v\t%v\t\n", mapItem.key, mapItem.url)
 					w.Flush()
+				}
+				return nil
+			},
+		},
+		{
+			Name:    "expand",
+			Aliases: []string{"x"},
+			Usage:   "Expands any prefix. `ldget x schema` => https://schema.org/",
+			Action: func(c *cli.Context) error {
+				prefix := c.Args().Get(0)
+				match := getPrefix(prefix)
+				if match == prefix {
+					fmt.Printf("Prefix '%v' Not found \n", match)
+				} else {
+					fmt.Printf("%v\n", match)
 				}
 				return nil
 			},
