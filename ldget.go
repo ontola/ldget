@@ -114,7 +114,7 @@ func run(args []string) {
 			Usage:   "Expands any prefix. `ldget x schema` => https://schema.org/",
 			Action: func(c *cli.Context) error {
 				prefix := c.Args().Get(0)
-				match := getPrefix(prefix)
+				match := Mapper(prefix)
 				if match == prefix {
 					fmt.Printf("Prefix '%v' Not found \n", match)
 				} else {

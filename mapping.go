@@ -15,12 +15,14 @@ type prefix struct {
 	url string
 }
 
-// Mapper -- converts a mapped prefix to a URI
+// Mapper - Converts a mapped prefix to a URI.
+// Returns the input string if none is found.
 func Mapper(str string) string {
 	httpCheck, err := regexp.MatchString(`http.*`, str)
 	if err != nil {
 		log.Fatal(err)
 	}
+	// By default, return the input string
 	output := str
 	// If the input starts with http, don't look up the mapping
 	if httpCheck {
