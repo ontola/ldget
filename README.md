@@ -9,8 +9,10 @@ A simple command line interface tool to get RDF items using HTTP GET requests.
 ## When should you use this?
 
 - You need RDF data as Stdout.
-- You want to write bash scripts that use linked data.
-- You need to check triple values from inside your terminal.
+- Write bash scripts that use linked data.
+- Check triple values from inside your terminal.
+- Testing your linked data service.
+- Get data from your [Solid](https://github.com/solid/solid) pod.
 
 ## Installation
 
