@@ -3,6 +3,10 @@
 PRs and issues are very welcome!
 We use GitFlow, so new features should be developed on a `feature/myCoolFeature` branch.
 
+## Development
+
+`go get ./... && go install`
+
 ## Releasing
 
 This project uses [GoReleaser](https://goreleaser.com/) to automatically create builds and publish to homebrew, the snap store and the github releases page.

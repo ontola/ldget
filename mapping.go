@@ -15,9 +15,9 @@ type prefix struct {
 	url string
 }
 
-// Mapper - Converts a mapped prefix to a URI.
-// Returns the input string if none is found.
-func Mapper(str string) string {
+// prefixMap - Converts a prefix string to a full URI.
+// Returns the input string if no prefix is found.
+func prefixMap(str string) string {
 	httpCheck, err := regexp.MatchString(`http.*`, str)
 	if err != nil {
 		log.Fatal(err)
@@ -44,6 +44,7 @@ func Mapper(str string) string {
 // Regex for the user's ~/.ldget/prefixes file
 var selector, _ = regexp.Compile(`(.*)=(.*)`)
 
+// Parses the prefixes file
 func readMap(filePath string) []prefix {
 	file, err := os.Open(filePath)
 	if err != nil {
@@ -55,6 +56,10 @@ func readMap(filePath string) []prefix {
 		line := scanner.Text()
 		// Lines that start with # are comments
 		if strings.HasPrefix(line, "#") {
+			continue
+		}
+		// Ignore empty lines
+		if line == "" {
 			continue
 		}
 		matches := selector.FindStringSubmatch(line)

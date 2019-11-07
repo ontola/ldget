@@ -9,7 +9,7 @@ A simple command line interface tool to get RDF items using HTTP GET requests.
 ## When should you use this?
 
 - You need RDF data as Stdout.
-- Write bash scripts that use linked data.
+- Write bash scripts that use linked data.ldget
 - Check triple values from inside your terminal.
 - Testing your linked data service.
 - Get data from your [Solid](https://github.com/solid/solid) pod.
@@ -18,7 +18,7 @@ A simple command line interface tool to get RDF items using HTTP GET requests.
 
 - On MacOS using [homebrew](https://brew.sh/): `$ brew tap ontola/ldget https://github.com/ontola/ldget.git && brew install ontola/ldget/ldget`
 - Or install the binaries from the [releases page](https://github.com/ontola/ldget/releases)
-- Or build it yourself. Clone this repo and run `go get ./... && go install` to install the dependencies and add `ldget` to `path`.
+- Or build it yourself. Install golang, clone this repo and run `go get ./... && go install` to install the dependencies and add `ldget` to `path`.
 
 ## Usage
 

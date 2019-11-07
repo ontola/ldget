@@ -56,7 +56,10 @@ func run(args []string) {
 			Name:    "triples",
 			Aliases: []string{"t", ""},
 			Usage:   "Fetch an RDF resource, return the triples. `ldget t ?s ?p ?o`",
-			Flags:   myFlags,
+			UsageText: "Fetch an RDF resource, return the triples. `ldget t ?s ?p ?o` \n" +
+				"You can use . as a wildcard. \n" +
+				"e.g. `ldget t dbpedia:Utrecht . dbpedia:Netherlands`",
+			Flags: myFlags,
 			Action: func(c *cli.Context) error {
 				args := getArgs(c)
 				hits := getTriples(args)
@@ -76,7 +79,7 @@ func run(args []string) {
 				args := getArgs(c)
 				hits := getTriples(args)
 				for _, element := range hits {
-					fmt.Println(element.Pred)
+					fmt.Println(element.Pred.Serialize(rdf.NTriples))
 				}
 				return nil
 			},
@@ -90,7 +93,7 @@ func run(args []string) {
 				args := getArgs(c)
 				hits := getTriples(args)
 				for _, element := range hits {
-					fmt.Println(element.Obj)
+					fmt.Println(element.Obj.Serialize(rdf.NTriples))
 				}
 				return nil
 			},
@@ -114,7 +117,7 @@ func run(args []string) {
 			Usage:   "Expands any prefix. `ldget x schema` => https://schema.org/",
 			Action: func(c *cli.Context) error {
 				prefix := c.Args().Get(0)
-				match := Mapper(prefix)
+				match := prefixMap(prefix)
 				if match == prefix {
 					fmt.Printf("Prefix '%v' Not found \n", match)
 				} else {
@@ -179,7 +182,7 @@ func getArgs(c *cli.Context) args {
 	arguments.predicate = cleanUpArg(predicate)
 	arguments.object = cleanUpArg(object)
 
-	arguments.subject = Mapper(arguments.subject)
+	arguments.subject = prefixMap(arguments.subject)
 	if c.String("resource") != "" {
 		arguments.resourceURL = c.String("resource")
 	} else {
@@ -188,7 +191,7 @@ func getArgs(c *cli.Context) args {
 		}
 		arguments.resourceURL = arguments.subject
 	}
-	arguments.predicate = Mapper(arguments.predicate)
+	arguments.predicate = prefixMap(arguments.predicate)
 
 	return arguments
 }
