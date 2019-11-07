@@ -60,9 +60,10 @@ snapcraft:
   # license: GPL-3.0+
   apps:
     ldget:
-      plugs: ["home", "network", "personal-files"]
+      plugs: ["home", "network", "home-ldget"]
   plugs:
-    personal-files:
+    home-ldget:
+      interface: personal-files
       read:
       - $HOME/.ldget
       write:
