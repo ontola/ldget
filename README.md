@@ -22,22 +22,21 @@ A simple command line interface tool to get RDF items using HTTP GET requests.
 
 ## Usage
 
-
-`$ ldget triples ?s ?p ?o` => fetches the subject (?s) URL, returns all triples that match as N-Triples.
-
-`$ ldget predicates ?s ?p ?o` => fetches the subject (?s) URL, returns the predicates that match
-
-`$ ldget objects ?s ?p ?o` => fetches the subject (?s) URL, returns the objects that match
-
-`$ ldget help` => help file
-
-`$ ldget prefixes` => shows your configured prefixes
-
-`$ ldget expand ?prefix` => prints the URL for a user defined prefix
+```
+COMMANDS:
+     triples, t            Fetch an RDF resource, return the triples. Serialized as N-Triples.
+     predicates, p         Fetch an RDF resource, return the predicates.
+     objects, o            Fetch an RDF resource, return the objects.
+     subjects, s           Fetch an RDF resource, return the subjects.
+     predicateObjects, po  Fetch an RDF resource, return the predicate and object values.
+     prefixes              Shows your user defined prefixes from  `~/.ldget/prefixes`.
+     expand, x             Expands any prefix. `ldget x schema` => https://schema.org/
+     help, h               Shows a list of commands or help for one command
+```
 
 Use `?s ?p ?o` to filter by `%{subject URL} %{predicate URL} %{object value}`. This is similar to [Triple Pattern Fragments](http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/#bib-hydra-ldf).
 
-If you want to fetch a URL, but do not want to filter by it's subject, you can use the `--resource` flag,
+If you want to fetch a URL, but do not want to filter by it's subject, you can use the `--resource` flag:
 
 `ldget triples --resource http://example.com/myResourceURL` Returns all triples for that resource as N-Triples.
 
