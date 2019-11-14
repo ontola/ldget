@@ -15,7 +15,7 @@ import (
 )
 
 // Negotiator -- Tries to fetch a resource using HTTP content negotiation
-func Negotiator(url string) (*http.Response, rdf.Format, error) {
+func Negotiator(url string, args args) (*http.Response, rdf.Format, error) {
 	client := &http.Client{}
 
 	req, err := http.NewRequest("GET", url, nil)
@@ -27,8 +27,7 @@ func Negotiator(url string) (*http.Response, rdf.Format, error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	// This should be an optional flag
-	verbose := false
+	verbose := args.verbose
 	if verbose == true {
 		// Debugging puposes
 		fmt.Println(formatRequest(req))

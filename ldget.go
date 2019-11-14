@@ -49,6 +49,10 @@ func run(args []string) {
 			Name:  "object, o",
 			Usage: "Filter by object value.",
 		},
+		cli.BoolFlag{
+			Name:  "verbose, v",
+			Usage: "Turn on verbose output, including requests.",
+		},
 	}
 
 	app.Commands = []cli.Command{
@@ -221,6 +225,8 @@ func getArgs(c *cli.Context) args {
 		arguments.resourceURL = arguments.subject
 	}
 	arguments.predicate = prefixMap(arguments.predicate)
-
+	if c.Bool("verbose") == true {
+		arguments.verbose = true
+	}
 	return arguments
 }
