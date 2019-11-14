@@ -51,7 +51,7 @@ func run(args []string) {
 		},
 		cli.BoolFlag{
 			Name:  "verbose, v",
-			Usage: "Turn on verbose output, including requests.",
+			Usage: "Turn on verbose output, including requests and responses.",
 		},
 	}
 
