@@ -23,7 +23,7 @@ func run(args []string) {
 	app.Name = "ldget"
 	app.Version = version
 	app.Compiled = time.Now()
-	app.Usage = "Get your RDF data, straight to your favorite terminal! Flags have precedence over arguments."
+	app.Usage = "Get your RDF data, straight to your favorite terminal! Filter triples using `?s ?p ?o`."
 	app.Authors = []cli.Author{
 		cli.Author{
 			Name:  "Joep Meindertsma",
@@ -54,11 +54,11 @@ func run(args []string) {
 	app.Commands = []cli.Command{
 		{
 			Name:    "triples",
-			Aliases: []string{"t", ""},
-			Usage:   "Fetch an RDF resource, return the triples. `ldget t ?s ?p ?o`",
-			UsageText: "Fetch an RDF resource, return the triples. `ldget t ?s ?p ?o` \n" +
-				"You can use . as a wildcard. \n" +
-				"e.g. `ldget t dbpedia:Utrecht . dbpedia:Netherlands`",
+			Aliases: []string{"t"},
+			Usage:   "Fetch an RDF resource, return the triples. Serialized as N-Triples.",
+			UsageText: "`ldget t ?s ?p ?o` \n" +
+				"   You can use . as a wildcard. \n" +
+				"   e.g. `ldget t dbpedia:Utrecht . dbpedia:Netherlands`",
 			Flags: myFlags,
 			Action: func(c *cli.Context) error {
 				args := getArgs(c)
@@ -72,8 +72,8 @@ func run(args []string) {
 		},
 		{
 			Name:    "predicates",
-			Aliases: []string{"p", ""},
-			Usage:   "Fetch an RDF resource, return the predicates. `ldget p ?s ?p ?o`",
+			Aliases: []string{"p"},
+			Usage:   "Fetch an RDF resource, return the predicates.",
 			Flags:   myFlags,
 			Action: func(c *cli.Context) error {
 				args := getArgs(c)
@@ -87,13 +87,41 @@ func run(args []string) {
 		{
 			Name:    "objects",
 			Aliases: []string{"o"},
-			Usage:   "Fetch an RDF resource, return the object values. `ldget o ?s ?p ?o`",
+			Usage:   "Fetch an RDF resource, return the objects.",
 			Flags:   myFlags,
 			Action: func(c *cli.Context) error {
 				args := getArgs(c)
 				hits := getTriples(args)
 				for _, element := range hits {
 					fmt.Println(element.Obj.Serialize(rdf.NTriples))
+				}
+				return nil
+			},
+		},
+		{
+			Name:    "subjects",
+			Aliases: []string{"s"},
+			Usage:   "Fetch an RDF resource, return the subjects.",
+			Flags:   myFlags,
+			Action: func(c *cli.Context) error {
+				args := getArgs(c)
+				hits := getTriples(args)
+				for _, element := range hits {
+					fmt.Println(element.Subj.Serialize(rdf.NTriples))
+				}
+				return nil
+			},
+		},
+		{
+			Name:    "predicateObjects",
+			Aliases: []string{"po"},
+			Usage:   "Fetch an RDF resource, return the predicate and object values.",
+			Flags:   myFlags,
+			Action: func(c *cli.Context) error {
+				args := getArgs(c)
+				hits := getTriples(args)
+				for _, element := range hits {
+					fmt.Printf("%v %v\n", element.Pred.Serialize(rdf.NTriples), element.Obj.Serialize(rdf.NTriples))
 				}
 				return nil
 			},
@@ -139,6 +167,7 @@ type args struct {
 	subject     string
 	object      string
 	predicate   string
+	verbose     bool
 }
 
 // Check if the input string should be interpreted as a wildcard
