@@ -143,7 +143,6 @@ func run(args []string) {
 				w := new(tabwriter.Writer)
 				w.Init(os.Stdout, 0, 8, 2, '\t', 0)
 				for _, element := range hits {
-					// fmt.Printf("%v %v\n", element.Pred.Serialize(rdf.NTriples), element.Obj.Serialize(rdf.NTriples))
 					fmt.Fprintf(w, "%v\t%v\t\n", tryURLToPrefix(element.Pred.Serialize(rdf.NTriples), args), element.Obj.Serialize(rdf.NTriples))
 				}
 				w.Flush()
