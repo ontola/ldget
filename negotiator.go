@@ -15,7 +15,7 @@ import (
 )
 
 // Negotiator -- Tries to fetch a resource using HTTP content negotiation
-func Negotiator(url string, args args) (*http.Response, rdf.Format, error) {
+func Negotiator(url string, args Args) (*http.Response, rdf.Format, error) {
 	client := &http.Client{}
 
 	req, err := http.NewRequest("GET", url, nil)

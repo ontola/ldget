@@ -10,14 +10,15 @@ import (
 	"strings"
 )
 
-type prefix struct {
+// Prefix - A single combination of a key and URL
+type Prefix struct {
 	key string
 	url string
 }
 
-// prefixMap - Converts a prefix string to a full URI.
+// prefixToURL - Converts a prefix string to a full URI.
 // Returns the input string if no prefix is found.
-func prefixMap(str string) string {
+func prefixToURL(str string, prefixes []Prefix) string {
 	httpCheck, err := regexp.MatchString(`http.*`, str)
 	if err != nil {
 		log.Fatal(err)
@@ -32,10 +33,10 @@ func prefixMap(str string) string {
 	// Check for colon prefix syntax, e.g. `schema:description`
 	matches := colonCheck.FindStringSubmatch(str)
 	if len(matches) > 2 {
-		output = fmt.Sprintf("%v%v", getPrefix(matches[1]), matches[2])
+		output = fmt.Sprintf("%v%v", getPrefix(matches[1], prefixes), matches[2])
 	} else {
 		// Directly use the prefix
-		output = getPrefix(str)
+		output = getPrefix(str, prefixes)
 	}
 
 	return output
@@ -45,12 +46,12 @@ func prefixMap(str string) string {
 var selector, _ = regexp.Compile(`(.*)=(.*)`)
 
 // Parses the prefixes file
-func readMap(filePath string) []prefix {
+func readMap(filePath string) []Prefix {
 	file, err := os.Open(filePath)
 	if err != nil {
 		log.Fatal(err)
 	}
-	var prefixes []prefix
+	var prefixes []Prefix
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -66,7 +67,7 @@ func readMap(filePath string) []prefix {
 		if len(matches) < 2 {
 			log.Fatal("Something is wrong with your prefixes file.")
 		}
-		var p prefix
+		var p Prefix
 		p.key = matches[1]
 		p.url = matches[2]
 		prefixes = append(prefixes, p)
@@ -77,8 +78,8 @@ func readMap(filePath string) []prefix {
 	return prefixes
 }
 
-func getAllMaps() []prefix {
-	var allPrefixes []prefix
+func getAllMaps() []Prefix {
+	var allPrefixes []Prefix
 
 	usr, err := user.Current()
 	if err != nil {
@@ -93,9 +94,9 @@ func getAllMaps() []prefix {
 var colonCheck, _ = regexp.Compile(`(.*):(.*)`)
 
 // Returns URL for some prefix
-func getPrefix(key string) string {
+func getPrefix(key string, prefixes []Prefix) string {
 	output := key
-	for _, prefix := range getAllMaps() {
+	for _, prefix := range prefixes {
 		if prefix.key == key {
 			output = prefix.url
 			break
