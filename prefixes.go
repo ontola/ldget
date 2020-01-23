@@ -12,7 +12,9 @@ import (
 
 // Prefix - A single combination of a key and URL
 type Prefix struct {
+	// The short version, e.g. "schema"
 	key string
+	// The long version, e.g. "https://schema.org/"
 	url string
 }
 
@@ -46,7 +48,7 @@ func prefixToURL(str string, prefixes []Prefix) string {
 var selector, _ = regexp.Compile(`(.*)=(.*)`)
 
 // Parses the prefixes file
-func readMap(filePath string) []Prefix {
+func readPrefixesFile(filePath string) []Prefix {
 	file, err := os.Open(filePath)
 	if err != nil {
 		log.Fatal(err)
@@ -78,7 +80,7 @@ func readMap(filePath string) []Prefix {
 	return prefixes
 }
 
-func getAllMaps() []Prefix {
+func getAllPrefixes() []Prefix {
 	var allPrefixes []Prefix
 
 	usr, err := user.Current()
@@ -87,8 +89,31 @@ func getAllMaps() []Prefix {
 	}
 	userMappingLocation := fmt.Sprintf("%v/.ldget/prefixes", usr.HomeDir)
 
-	allPrefixes = append(allPrefixes, readMap(userMappingLocation)...)
+	allPrefixes = append(allPrefixes, readPrefixesFile(userMappingLocation)...)
 	return allPrefixes
+}
+
+func removeBrackets(url string) string {
+	noSuffix := strings.TrimSuffix(url, ">")
+	output := strings.TrimPrefix(noSuffix, "<")
+	return output
+}
+
+// Converts a URL to a prefix
+// e.g. <https://schema.org/hello> => schema:hello
+func tryURLToPrefix(url string, args Args) string {
+	cleanURL := removeBrackets(url)
+	output := cleanURL
+
+	for _, prefix := range args.prefixes {
+		if strings.HasPrefix(cleanURL, prefix.url) {
+			prefixWithColon := fmt.Sprintf("%v:", prefix.key)
+			newString := strings.Replace(cleanURL, prefix.url, prefixWithColon, 1)
+			output = newString
+			break
+		}
+	}
+	return output
 }
 
 var colonCheck, _ = regexp.Compile(`(.*):(.*)`)

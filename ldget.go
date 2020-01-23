@@ -133,10 +133,28 @@ func run(args []string) {
 			},
 		},
 		{
+			Name:    "show",
+			Aliases: []string{"sh"},
+			Usage:   "Fetch an RDF resource, return the predicate and object values in a nice table.",
+			Flags:   myFlags,
+			Action: func(c *cli.Context) error {
+				args := getArgs(c)
+				hits := getTriples(args)
+				w := new(tabwriter.Writer)
+				w.Init(os.Stdout, 0, 8, 2, '\t', 0)
+				for _, element := range hits {
+					// fmt.Printf("%v %v\n", element.Pred.Serialize(rdf.NTriples), element.Obj.Serialize(rdf.NTriples))
+					fmt.Fprintf(w, "%v\t%v\t\n", tryURLToPrefix(element.Pred.Serialize(rdf.NTriples), args), element.Obj.Serialize(rdf.NTriples))
+				}
+				w.Flush()
+				return nil
+			},
+		},
+		{
 			Name:  "prefixes",
 			Usage: fmt.Sprintf("Shows your user defined prefixes from  '%v'.", defaultPrefixPath),
 			Action: func(c *cli.Context) error {
-				for _, mapItem := range getAllMaps() {
+				for _, mapItem := range getAllPrefixes() {
 					w := new(tabwriter.Writer)
 					w.Init(os.Stdout, 15, 8, 0, '\t', 0)
 					fmt.Fprintf(w, "%v\t%v\t\n", mapItem.key, mapItem.url)
@@ -220,7 +238,7 @@ func getArgs(c *cli.Context) Args {
 	arguments.predicate = cleanUpArg(predicate)
 	arguments.object = cleanUpArg(object)
 
-	arguments.prefixes = getAllMaps()
+	arguments.prefixes = getAllPrefixes()
 
 	arguments.subject = prefixToURL(arguments.subject, arguments.prefixes)
 	if c.String("resource") != "" {
