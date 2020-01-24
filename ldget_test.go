@@ -57,6 +57,9 @@ var objectTests = []struct {
 func TestObjectParser(t *testing.T) {
 	go srv.Testserver()
 
+	// Run once to setup prefixes
+	run([]string{appname, "o", extSubj, extPred})
+
 	// Execute every single test string from objectTests
 	for _, tt := range objectTests {
 		fmt.Print(tt.in[0:])
