@@ -34,7 +34,7 @@ func Parse(body io.Reader, format rdf.Format) ([]rdf.Triple, error) {
 }
 
 // Fetches triples for a set of arguments, returns the filtered triples
-func getTriples(a args) []rdf.Triple {
+func getTriples(a Args) []rdf.Triple {
 	resp, format, err := Negotiator(a.resourceURL, a)
 	if err != nil {
 		log.Fatal(err)

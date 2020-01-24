@@ -14,6 +14,8 @@ import (
 // Overwrite these using ldflags
 var version = fmt.Sprintf("dev%v", time.Now().Format(time.RFC3339))
 
+var prefixPath = GetPrefixPath()
+
 func main() {
 	run(os.Args)
 }
@@ -51,7 +53,7 @@ func run(args []string) {
 		},
 		cli.BoolFlag{
 			Name:  "verbose, v",
-			Usage: "Turn on verbose output, including requests.",
+			Usage: "Turn on verbose output, including requests and responses.",
 		},
 	}
 
@@ -131,10 +133,27 @@ func run(args []string) {
 			},
 		},
 		{
-			Name:  "prefixes",
-			Usage: "Shows your user defined prefixes from  `~/.ldget/prefixes`.",
+			Name:    "show",
+			Aliases: []string{"sh"},
+			Usage:   "Fetch an RDF resource, return the predicate and object values in a nice table.",
+			Flags:   myFlags,
 			Action: func(c *cli.Context) error {
-				for _, mapItem := range getAllMaps() {
+				args := getArgs(c)
+				hits := getTriples(args)
+				w := new(tabwriter.Writer)
+				w.Init(os.Stdout, 0, 8, 2, '\t', 0)
+				for _, element := range hits {
+					fmt.Fprintf(w, "%v\t%v\t\n", tryURLToPrefix(element.Pred.Serialize(rdf.NTriples), args), element.Obj.Serialize(rdf.NTriples))
+				}
+				w.Flush()
+				return nil
+			},
+		},
+		{
+			Name:  "prefixes",
+			Usage: fmt.Sprintf("Shows your user defined prefixes from  '%v'.", prefixPath),
+			Action: func(c *cli.Context) error {
+				for _, mapItem := range getAllPrefixes(prefixPath) {
 					w := new(tabwriter.Writer)
 					w.Init(os.Stdout, 15, 8, 0, '\t', 0)
 					fmt.Fprintf(w, "%v\t%v\t\n", mapItem.key, mapItem.url)
@@ -149,9 +168,10 @@ func run(args []string) {
 			Usage:   "Expands any prefix. `ldget x schema` => https://schema.org/",
 			Action: func(c *cli.Context) error {
 				prefix := c.Args().Get(0)
-				match := prefixMap(prefix)
+				args := getArgs(c)
+				match := prefixToURL(prefix, args.prefixes)
 				if match == prefix {
-					fmt.Printf("Prefix '%v' Not found \n", match)
+					fmt.Printf("Prefix '%v' not found in '%v'  \n", match, prefixPath)
 				} else {
 					fmt.Printf("%v\n", match)
 				}
@@ -166,12 +186,15 @@ func run(args []string) {
 	}
 }
 
-type args struct {
-	resourceURL string
-	subject     string
-	object      string
-	predicate   string
-	verbose     bool
+// Args - All instance specific arguments
+type Args struct {
+	resourceURL string   // The URL that should be fetched
+	subject     string   // Filter results by Subject
+	predicate   string   // Filter results by Predicate
+	object      string   // Filter results by Object
+	verbose     bool     // Print verbose logs
+	prefixPath  string   // Path to the prefixes file
+	prefixes    []Prefix // Array of (user defined) prefixes
 }
 
 // Check if the input string should be interpreted as a wildcard
@@ -194,8 +217,8 @@ func cleanUpArg(s string) string {
 	return s
 }
 
-func getArgs(c *cli.Context) args {
-	var arguments args
+func getArgs(c *cli.Context) Args {
+	var arguments Args
 
 	subject := c.Args().Get(0)
 	predicate := c.Args().Get(1)
@@ -215,7 +238,10 @@ func getArgs(c *cli.Context) args {
 	arguments.predicate = cleanUpArg(predicate)
 	arguments.object = cleanUpArg(object)
 
-	arguments.subject = prefixMap(arguments.subject)
+	arguments.prefixPath = prefixPath
+	arguments.prefixes = getAllPrefixes(prefixPath)
+
+	arguments.subject = prefixToURL(arguments.subject, arguments.prefixes)
 	if c.String("resource") != "" {
 		arguments.resourceURL = c.String("resource")
 	} else {
@@ -224,7 +250,7 @@ func getArgs(c *cli.Context) args {
 		}
 		arguments.resourceURL = arguments.subject
 	}
-	arguments.predicate = prefixMap(arguments.predicate)
+	arguments.predicate = prefixToURL(arguments.predicate, arguments.prefixes)
 	if c.Bool("verbose") == true {
 		arguments.verbose = true
 	}

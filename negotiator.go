@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"strings"
+	"net/http/httputil"
 
 	"github.com/knakk/rdf"
 
@@ -15,7 +15,7 @@ import (
 )
 
 // Negotiator -- Tries to fetch a resource using HTTP content negotiation
-func Negotiator(url string, args args) (*http.Response, rdf.Format, error) {
+func Negotiator(url string, args Args) (*http.Response, rdf.Format, error) {
 	client := &http.Client{}
 
 	req, err := http.NewRequest("GET", url, nil)
@@ -27,10 +27,17 @@ func Negotiator(url string, args args) (*http.Response, rdf.Format, error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	verbose := args.verbose
-	if verbose == true {
-		// Debugging puposes
-		fmt.Println(formatRequest(req))
+	if args.verbose == true {
+		request, err := httputil.DumpRequestOut(req, true)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(string(request))
+		response, err := httputil.DumpResponse(resp, true)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(string(response))
 	}
 	if resp.StatusCode != 200 {
 		log.Fatalf("HTTP status code: %v\n", resp.StatusCode)
@@ -42,33 +49,6 @@ func Negotiator(url string, args args) (*http.Response, rdf.Format, error) {
 	format := findFormat(respType)
 
 	return resp, format, err
-}
-
-// formatRequest generates ascii representation of a request
-func formatRequest(r *http.Request) string {
-	// Create return string
-	var request []string
-	// Add the request string
-	url := fmt.Sprintf("%v %v %v", r.Method, r.URL, r.Proto)
-	request = append(request, url)
-	// Add the host
-	request = append(request, fmt.Sprintf("Host: %v", r.Host))
-	// Loop through headers
-	for name, headers := range r.Header {
-		name = strings.ToLower(name)
-		for _, h := range headers {
-			request = append(request, fmt.Sprintf("%v: %v", name, h))
-		}
-	}
-
-	// If this is a POST, add post data
-	if r.Method == "POST" {
-		r.ParseForm()
-		request = append(request, "\n")
-		request = append(request, r.Form.Encode())
-	}
-	// Return the request as a string
-	return strings.Join(request, "\n")
 }
 
 var acceptSelector, _ = regexp.Compile(`(.*);`)

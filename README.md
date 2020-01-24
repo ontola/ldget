@@ -24,14 +24,15 @@ A simple command line interface tool to get RDF items using HTTP GET requests.
 
 ```
 COMMANDS:
-     triples, t            Fetch an RDF resource, return the triples. Serialized as N-Triples.
-     predicates, p         Fetch an RDF resource, return the predicates.
-     objects, o            Fetch an RDF resource, return the objects.
-     subjects, s           Fetch an RDF resource, return the subjects.
-     predicateObjects, po  Fetch an RDF resource, return the predicate and object values.
-     prefixes              Shows your user defined prefixes from  `~/.ldget/prefixes`.
-     expand, x             Expands any prefix. `ldget x schema` => https://schema.org/
-     help, h               Shows a list of commands or help for one command
+   triples, t            Fetch an RDF resource, return the triples. Serialized as N-Triples.
+   predicates, p         Fetch an RDF resource, return the predicates.
+   objects, o            Fetch an RDF resource, return the objects.
+   subjects, s           Fetch an RDF resource, return the subjects.
+   predicateObjects, po  Fetch an RDF resource, return the predicate and object values.
+   show, sh              Fetch an RDF resource, return the predicate and object values in a nice table.
+   prefixes              Shows your user defined prefixes from  '~/.ldget/prefixes'.
+   expand, x             Expands any prefix. `ldget x schema` => https://schema.org/
+   help, h               Shows a list of commands or help for one command
 ```
 
 Use `?s ?p ?o` to filter by `%{subject URL} %{predicate URL} %{object value}`. This is similar to [Triple Pattern Fragments](http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/#bib-hydra-ldf).

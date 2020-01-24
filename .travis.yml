@@ -1,6 +1,6 @@
 language: go
 go:
-- 1.11.1
+- 1.13.6
 addons:
   apt:
     packages:
@@ -8,11 +8,10 @@ addons:
     - snapd
 env:
 - PATH=/snap/bin:$PATH
+- GO111MODULE=on
 install:
 - sudo snap install snapcraft --classic
-- go get github.com/knakk/rdf
-- go get github.com/urfave/cli
-- go get github.com/kami-zh/go-capturer
+- go get
 after_success:
 - test -n "$TRAVIS_TAG" && snapcraft login --with snap.login
 deploy:
