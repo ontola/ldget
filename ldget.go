@@ -14,7 +14,7 @@ import (
 // Overwrite these using ldflags
 var version = fmt.Sprintf("dev%v", time.Now().Format(time.RFC3339))
 
-var defaultPrefixPath = `~/.ldget/prefixes`
+var prefixPath = GetPrefixPath()
 
 func main() {
 	run(os.Args)
@@ -151,9 +151,9 @@ func run(args []string) {
 		},
 		{
 			Name:  "prefixes",
-			Usage: fmt.Sprintf("Shows your user defined prefixes from  '%v'.", defaultPrefixPath),
+			Usage: fmt.Sprintf("Shows your user defined prefixes from  '%v'.", prefixPath),
 			Action: func(c *cli.Context) error {
-				for _, mapItem := range getAllPrefixes() {
+				for _, mapItem := range getAllPrefixes(prefixPath) {
 					w := new(tabwriter.Writer)
 					w.Init(os.Stdout, 15, 8, 0, '\t', 0)
 					fmt.Fprintf(w, "%v\t%v\t\n", mapItem.key, mapItem.url)
@@ -171,7 +171,7 @@ func run(args []string) {
 				args := getArgs(c)
 				match := prefixToURL(prefix, args.prefixes)
 				if match == prefix {
-					fmt.Printf("Prefix '%v' not found in '%v'  \n", match, defaultPrefixPath)
+					fmt.Printf("Prefix '%v' not found in '%v'  \n", match, prefixPath)
 				} else {
 					fmt.Printf("%v\n", match)
 				}
@@ -188,12 +188,13 @@ func run(args []string) {
 
 // Args - All instance specific arguments
 type Args struct {
-	resourceURL string
-	subject     string
-	object      string
-	predicate   string
-	verbose     bool
-	prefixes    []Prefix
+	resourceURL string   // The URL that should be fetched
+	subject     string   // Filter results by Subject
+	predicate   string   // Filter results by Predicate
+	object      string   // Filter results by Object
+	verbose     bool     // Print verbose logs
+	prefixPath  string   // Path to the prefixes file
+	prefixes    []Prefix // Array of (user defined) prefixes
 }
 
 // Check if the input string should be interpreted as a wildcard
@@ -237,7 +238,8 @@ func getArgs(c *cli.Context) Args {
 	arguments.predicate = cleanUpArg(predicate)
 	arguments.object = cleanUpArg(object)
 
-	arguments.prefixes = getAllPrefixes()
+	arguments.prefixPath = prefixPath
+	arguments.prefixes = getAllPrefixes(prefixPath)
 
 	arguments.subject = prefixToURL(arguments.subject, arguments.prefixes)
 	if c.String("resource") != "" {
